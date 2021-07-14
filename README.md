@@ -1,6 +1,4 @@
 # soul-ui
 
-#### 介绍
-
-基于 Vue3 + Vite 的自定义UI库
+Mobile UI Components built on Vue3 and Vite
 
