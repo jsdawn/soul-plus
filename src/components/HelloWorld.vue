@@ -24,7 +24,7 @@
 
 <script setup>
 import { reactive, toRefs } from 'vue';
-import logoUrl from '@/assets/logo.png';
+import logoUrl from 'assets/logo.png';
 import SoDropdownMenu from 'packages/DropdownMenu/SoDropdownMenu.vue';
 
 defineProps({

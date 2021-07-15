@@ -5,6 +5,25 @@
         <span class="so-dropdown-menu__title">对对对</span>
       </div>
     </div>
+
+    <div
+      class="so-overlay"
+      style="animation-duration: 0.2s;top:200px"
+    ></div>
+
+    <div class="so-dropdown-item">
+      <div class="so-dropdown-item__content">
+        <div>选项一</div>
+        <div>选项二</div>
+      </div>
+    </div>
+
+    <div class="so-dropdown-item">
+      <div class="so-dropdown-item__content">
+        <div>选项一</div>
+        <div>选项二</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -88,5 +107,15 @@
       }
     }
   }
+}
+
+.so-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 </style>

@@ -8,8 +8,9 @@ export default {
   resolve: {
     alias: {
       '@': resolve('src'),
-      packages: resolve('packages'),
-      style: resolve('src/style')
+      assets: resolve('src/assets'),
+      style: resolve('src/style'),
+      packages: resolve('packages')
     }
   },
   css: {
