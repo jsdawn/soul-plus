@@ -1,4 +1,4 @@
-import { Ref, unref } from 'vue';
+import { unref } from 'vue';
 
 function isWindow(val) {
   return val === window;

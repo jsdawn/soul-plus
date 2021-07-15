@@ -9,7 +9,7 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <img :src="logoUrl" alt="" />
+  <!-- <img :src="logoUrl" alt="" /> -->
 
   <button type="button" @click="state.count++">
     count is: {{ state.count }}
