@@ -49,7 +49,7 @@
         >
           <!-- <transition-group name="slide-item">
             <SoDropdownItem/>
-          </transition-group> -->
+          </transition-group>-->
           <slot></slot>
         </div>
       </transition>
@@ -67,7 +67,8 @@ import {
   nextTick,
   provide,
   useSlots,
-  onUpdated
+  onUpdated,
+  computed
 } from 'vue';
 import {
   useRect,
@@ -95,7 +96,7 @@ const contentRef = ref();
 const items = ref([]);
 const scrollParent = useScrollParent(rootRef);
 
-provide('rootDropdown', { active: active });
+provide('rootActive', active);
 
 provide('updatePaneState', pane => {
   let findItem = items.value.find(v => v.props.title === pane.props.title);

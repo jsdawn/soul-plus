@@ -22,21 +22,21 @@ const props = defineProps({
   titleClass: String
 });
 
-const rootDropdown = inject('rootDropdown');
+const rootActive = inject('rootActive');
 const updatePaneState = inject('updatePaneState');
 const instance = getCurrentInstance();
 
-watch(
-  () => rootDropdown.active,
-  () => {
-    console.log(rootDropdown.active);
-  }
-);
-
 const active = computed(() => {
   console.log(active);
-  return rootDropdown.active === instance.uid;
+  return rootActive.value === instance.uid;
 });
+
+watch(
+  () => rootActive,
+  val => {
+    console.log(val);
+  }
+);
 
 updatePaneState({
   uid: instance.uid,
