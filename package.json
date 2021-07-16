@@ -5,8 +5,9 @@
   "author": "jsdawn",
   "license": "MIT",
   "files": [
+    "lib",
     "es",
-    "lib"
+    "packages"
   ],
   "scripts": {
     "dev": "vite",

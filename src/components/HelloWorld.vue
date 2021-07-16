@@ -19,13 +19,27 @@
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
 
-  <SoDropdownMenu />
+  <so-dropdown-menu>
+    <so-dropdown-item title="全部商品">
+      <p v-for="n in 5" :key="n">商品{{ n }}</p>
+    </so-dropdown-item>
+    <so-dropdown-item title="排序">
+      <p v-for="n in 7" :key="n">排序{{ n }}</p>
+    </so-dropdown-item>
+    <p title="dddd"></p>
+  </so-dropdown-menu>
+
+  <div style="height:200px;backgroundColor:#ffd01e"></div>
+  <div style="height:200px;backgroundColor:#ffd01e"></div>
+  <div style="height:200px;backgroundColor:#ffd01e"></div>
+  <div style="height:200px;backgroundColor:#ffd01e"></div>
 </template>
 
 <script setup>
 import { reactive, toRefs } from 'vue';
 import logoUrl from 'assets/logo.png';
 import SoDropdownMenu from 'packages/DropdownMenu/SoDropdownMenu.vue';
+import SoDropdownItem from 'packages/DropdownItem/SoDropdownItem.vue';
 
 defineProps({
   msg: String
@@ -34,8 +48,6 @@ defineProps({
 const state = reactive({
   count: 0
 });
-
-console.log(import.meta.env);
 </script>
 
 <style lang="scss" scoped>

@@ -11,16 +11,16 @@
         role="button"
         tabindex="0"
         class="so-dropdown-menu__item"
-        v-for="(item, index) in state.items"
+        v-for="(item, index) in items"
         :key="index"
-        @click="toggleItem(index)"
+        @click="toggleItem(item)"
       >
         <span
           :class="[
             'so-dropdown-menu__title',
-            { 'so-dropdown-menu__title--active': index === state.active }
+            { 'so-dropdown-menu__title--active': item.uid === active }
           ]"
-          >{{ item.title }}</span
+          >{{ item.props?.title }}</span
         >
       </div>
     </div>
@@ -42,28 +42,15 @@
 
       <transition name="so-slide-down" :onAfterLeave="onClosed">
         <div
+          ref="contentRef"
           class="so-dropdown-menu__content"
           v-show="state.opened"
           :style="{ height: state.contentHeight }"
         >
-          <transition-group name="slide-item">
-            <div
-              class="so-dropdown-item"
-              v-for="(item, index) in state.items"
-              :key="index"
-              :ref="
-                el => {
-                  if (el) itemsRef[index] = el;
-                }
-              "
-              v-show="index === state.active"
-              style="padding:20px 0;"
-            >
-              <div>这里是内容</div>
-              <div>以下遍历选项</div>
-              <div v-for="n in index + 5" :key="n">{{ item.title + n }}</div>
-            </div>
-          </transition-group>
+          <!-- <transition-group name="slide-item">
+            <SoDropdownItem/>
+          </transition-group> -->
+          <slot></slot>
         </div>
       </transition>
     </div>
@@ -72,8 +59,16 @@
 
 <script setup>
 // https://vant-contrib.gitee.io/vant/v3/#/zh-CN/dropdown-menu#jie-shao
-// https://github.com/youzan/vant/blob/dev/src/dropdown-menu/DropdownMenu.tsx
-import { ref, reactive, watchEffect, nextTick } from 'vue';
+// https://gitee.com/vant-contrib/vant/tree/dev/src/dropdown-menu
+import {
+  ref,
+  reactive,
+  watchEffect,
+  nextTick,
+  provide,
+  useSlots,
+  onUpdated
+} from 'vue';
 import {
   useRect,
   useEventListener,
@@ -83,26 +78,29 @@ import {
 
 const emit = defineEmits(['closed']);
 
+const slots = useSlots();
+
 const state = reactive({
   offset: 0,
   opened: false,
   showWrapper: false,
-  items: [{ title: '全部商品' }, { title: '排序' }],
-  active: -1,
   contentHeight: 'auto'
 });
 
+const active = ref(-1);
 const rootRef = ref();
 const barRef = ref();
-const itemsRef = ref([]);
+const contentRef = ref();
+// const itemsRef = ref([]);
+const items = ref([]);
 const scrollParent = useScrollParent(rootRef);
 
-watchEffect(
-  () => {
-    console.dir(itemsRef.value);
-  },
-  { flush: 'post' }
-);
+provide('rootDropdown', { active: active });
+
+provide('updatePaneState', pane => {
+  let findItem = items.value.find(v => v.props.title === pane.props.title);
+  if (!findItem) items.value.push(pane);
+});
 
 const updateOffset = () => {
   if (!barRef.value) return;
@@ -114,20 +112,20 @@ const onScroll = () => {
   updateOffset();
 };
 
-const toggleItem = idx => {
+const toggleItem = item => {
   // state.contentHeight = 100 * (idx + 1) + 'px';
-  if (idx === state.active) {
+  if (item.uid === active.value) {
     state.opened = !state.opened;
   } else {
     state.opened = true;
   }
 
-  state.active = idx;
+  active.value = item.uid;
   // 动态设置content高度赋予动画
-  nextTick(() => {
-    let activeHeight = itemsRef.value[idx]?.offsetHeight;
-    state.contentHeight = activeHeight ? activeHeight + 'px' : 'auto';
-  });
+  // nextTick(() => {
+  //   let activeHeight = itemsRef.value[idx]?.offsetHeight;
+  //   state.contentHeight = activeHeight ? activeHeight + 'px' : 'auto';
+  // });
   if (state.opened) {
     state.showWrapper = true;
   }
@@ -142,6 +140,8 @@ const onClosed = () => {
   state.showWrapper = false;
   emit('closed');
 };
+
+onUpdated(() => {});
 
 onMountedOrActivated(() => {
   updateOffset();
@@ -248,7 +248,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     max-height: 80%;
     overflow: hidden;
     background-color: #fff;
-    transition: height 0.2s ease-in-out;
+    transition: height 0.2s ease-out;
   }
 
   &__overlay {
@@ -258,20 +258,6 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-  }
-}
-
-@keyframes slide-item-enter {
-  from {
-    opacity: 0.5;
-    transform: translate3d(0, 20%, 0);
-  }
-}
-
-.slide-item {
-  &-enter-active {
-    animation: slide-item-enter $animation-duration-base both
-      $animation-timing-function-enter;
   }
 }
 </style>

@@ -27,11 +27,11 @@ export function getScrollParent(el, root = defaultRoot) {
 
 export function useScrollParent(el, root = defaultRoot) {
   const scrollParent = ref();
-  let node = unref(el);
 
   onMounted(() => {
-    if (node) {
-      scrollParent.value = getScrollParent(node, root);
+    // el为响应ref，此次不可unref
+    if (el.value) {
+      scrollParent.value = getScrollParent(el.value, root);
     }
   });
 
