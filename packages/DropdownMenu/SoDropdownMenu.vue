@@ -33,21 +33,37 @@
       }"
     >
       <transition name="so-fade">
-        <div class="so-dropdown-menu__overlay" v-show="state.opened"></div>
+        <div
+          class="so-dropdown-menu__overlay"
+          v-show="state.opened"
+          @click="clickOverlay"
+        ></div>
       </transition>
 
       <transition name="so-slide-down" :onAfterLeave="onClosed">
-        <div class="so-dropdown-menu__content" v-show="state.opened">
-          <div
-            class="so-dropdown-item"
-            v-for="(item, index) in state.items"
-            :key="index"
-            v-show="index === state.active"
-          >
-            <div>这里是内容</div>
-            <div>以下遍历选项</div>
-            <div v-for="n in index + 1" :key="n">{{ item.title + n }}</div>
-          </div>
+        <div
+          class="so-dropdown-menu__content"
+          v-show="state.opened"
+          :style="{ height: state.contentHeight }"
+        >
+          <transition-group name="slide-item">
+            <div
+              class="so-dropdown-item"
+              v-for="(item, index) in state.items"
+              :key="index"
+              :ref="
+                el => {
+                  if (el) itemsRef[index] = el;
+                }
+              "
+              v-show="index === state.active"
+              style="padding:20px 0;"
+            >
+              <div>这里是内容</div>
+              <div>以下遍历选项</div>
+              <div v-for="n in index + 5" :key="n">{{ item.title + n }}</div>
+            </div>
+          </transition-group>
         </div>
       </transition>
     </div>
@@ -57,7 +73,7 @@
 <script setup>
 // https://vant-contrib.gitee.io/vant/v3/#/zh-CN/dropdown-menu#jie-shao
 // https://github.com/youzan/vant/blob/dev/src/dropdown-menu/DropdownMenu.tsx
-import { ref, reactive } from 'vue';
+import { ref, reactive, watchEffect, nextTick } from 'vue';
 import {
   useRect,
   useEventListener,
@@ -72,12 +88,21 @@ const state = reactive({
   opened: false,
   showWrapper: false,
   items: [{ title: '全部商品' }, { title: '排序' }],
-  active: -1
+  active: -1,
+  contentHeight: 'auto'
 });
 
 const rootRef = ref();
 const barRef = ref();
+const itemsRef = ref([]);
 const scrollParent = useScrollParent(rootRef);
+
+watchEffect(
+  () => {
+    console.dir(itemsRef.value);
+  },
+  { flush: 'post' }
+);
 
 const updateOffset = () => {
   if (!barRef.value) return;
@@ -90,6 +115,7 @@ const onScroll = () => {
 };
 
 const toggleItem = idx => {
+  // state.contentHeight = 100 * (idx + 1) + 'px';
   if (idx === state.active) {
     state.opened = !state.opened;
   } else {
@@ -97,11 +123,21 @@ const toggleItem = idx => {
   }
 
   state.active = idx;
+  // 动态设置content高度赋予动画
+  nextTick(() => {
+    let activeHeight = itemsRef.value[idx]?.offsetHeight;
+    state.contentHeight = activeHeight ? activeHeight + 'px' : 'auto';
+  });
   if (state.opened) {
     state.showWrapper = true;
   }
 };
 
+const clickOverlay = () => {
+  state.opened = false;
+};
+
+// content 离开动画结束自动触发 onAfterLeave
 const onClosed = () => {
   state.showWrapper = false;
   emit('closed');
@@ -151,7 +187,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
       }
 
       .van-dropdown-menu__title {
-        color: red;
+        color: $danger-color;
       }
     }
   }
@@ -171,14 +207,14 @@ useEventListener('scroll', onScroll, { target: scrollParent });
       right: -4px;
       margin-top: -5px;
       border: 3px solid;
-      border-color: transparent transparent #dcdee0 #dcdee0;
+      border-color: transparent transparent $gray-4 $gray-4;
       transform: rotate(-45deg);
       opacity: 0.8;
       content: '';
     }
 
     &--active {
-      color: red;
+      color: $danger-color;
 
       &::after {
         margin-top: -1px;
@@ -212,6 +248,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     max-height: 80%;
     overflow: hidden;
     background-color: #fff;
+    transition: height 0.2s ease-in-out;
   }
 
   &__overlay {
@@ -221,6 +258,20 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes slide-item-enter {
+  from {
+    opacity: 0.5;
+    transform: translate3d(0, 20%, 0);
+  }
+}
+
+.slide-item {
+  &-enter-active {
+    animation: slide-item-enter $animation-duration-base both
+      $animation-timing-function-enter;
   }
 }
 </style>
