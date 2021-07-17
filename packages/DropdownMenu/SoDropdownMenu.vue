@@ -11,16 +11,20 @@
         role="button"
         tabindex="0"
         class="so-dropdown-menu__item"
-        v-for="(item, index) in items"
+        v-for="(item, index) in panes"
         :key="index"
-        @click="toggleItem(item)"
+        @click="toggleItem(index)"
       >
         <span
           :class="[
             'so-dropdown-menu__title',
-            { 'so-dropdown-menu__title--active': item.uid === active }
+            {
+              'so-dropdown-menu__title--active':
+                index === activeIdx && state.opened
+            }
           ]"
-          >{{ item.props?.title }}</span
+        >
+          <div>{{ item.props?.title }}</div></span
         >
       </div>
     </div>
@@ -42,14 +46,10 @@
 
       <transition name="so-slide-down" :onAfterLeave="onClosed">
         <div
-          ref="contentRef"
           class="so-dropdown-menu__content"
           v-show="state.opened"
-          :style="{ height: state.contentHeight }"
+          :style="{ height: state.wrapHeight }"
         >
-          <!-- <transition-group name="slide-item">
-            <SoDropdownItem/>
-          </transition-group>-->
           <slot></slot>
         </div>
       </transition>
@@ -58,18 +58,7 @@
 </template>
 
 <script setup>
-// https://vant-contrib.gitee.io/vant/v3/#/zh-CN/dropdown-menu#jie-shao
-// https://gitee.com/vant-contrib/vant/tree/dev/src/dropdown-menu
-import {
-  ref,
-  reactive,
-  watchEffect,
-  nextTick,
-  provide,
-  useSlots,
-  onUpdated,
-  computed
-} from 'vue';
+import { ref, reactive, provide, computed, useSlots } from 'vue';
 import {
   useRect,
   useEventListener,
@@ -85,22 +74,53 @@ const state = reactive({
   offset: 0,
   opened: false,
   showWrapper: false,
-  contentHeight: 'auto'
+  wrapHeight: 'auto'
 });
 
-const active = ref(-1);
+const activeIdx = ref(-1); // 激活的 index
+const panes = ref([]); // 存放 items 实例
 const rootRef = ref();
 const barRef = ref();
-const contentRef = ref();
-// const itemsRef = ref([]);
-const items = ref([]);
 const scrollParent = useScrollParent(rootRef);
 
-provide('rootActive', active);
+const paneSlots = computed(() => {
+  let ps = slots.default?.() || [];
+  return ps.filter(v => v.type?.name === 'SoDropdownItem');
+});
 
+const activeUid = computed(() => panes.value[activeIdx.value]?.uid);
+
+// 提供 current active uid
+provide('rootActive', activeUid);
+// 提供 pane 实例入栈 fun
 provide('updatePaneState', pane => {
-  let findItem = items.value.find(v => v.props.title === pane.props.title);
-  if (!findItem) items.value.push(pane);
+  let findPane = panes.value.find(v => v.uid === pane.uid);
+  if (findPane) {
+    panes.value = panes.value.filter(v => v.uid !== findPane.uid);
+  } else {
+    panes.value.push(pane);
+  }
+
+  if (paneSlots.value.length === 0) {
+    console.warn('Warn--SoDropdownMenu: lose default slots');
+    return;
+  }
+
+  // 排序 -- paneSlots
+  let newPanes = [];
+  for (let v of paneSlots.value) {
+    let vPane = panes.value.find(p => p.props.title === v.props.title);
+    if (vPane) newPanes.push(vPane);
+  }
+  panes.value = newPanes;
+
+  if (activeIdx.value > panes.value.length - 1) {
+    activeIdx.value = 0;
+  }
+});
+// 提供 wrap heigth-px fun
+provide('updateWrapHeight', heigth => {
+  state.wrapHeight = heigth || 'auto';
 });
 
 const updateOffset = () => {
@@ -113,20 +133,14 @@ const onScroll = () => {
   updateOffset();
 };
 
-const toggleItem = item => {
-  // state.contentHeight = 100 * (idx + 1) + 'px';
-  if (item.uid === active.value) {
+const toggleItem = idx => {
+  if (idx === activeIdx.value) {
     state.opened = !state.opened;
   } else {
     state.opened = true;
   }
+  activeIdx.value = idx;
 
-  active.value = item.uid;
-  // 动态设置content高度赋予动画
-  // nextTick(() => {
-  //   let activeHeight = itemsRef.value[idx]?.offsetHeight;
-  //   state.contentHeight = activeHeight ? activeHeight + 'px' : 'auto';
-  // });
   if (state.opened) {
     state.showWrapper = true;
   }
@@ -136,13 +150,11 @@ const clickOverlay = () => {
   state.opened = false;
 };
 
-// content 离开动画结束自动触发 onAfterLeave
+// content 离开动画结束触发 onAfterLeave 隐藏 container
 const onClosed = () => {
   state.showWrapper = false;
   emit('closed');
 };
-
-onUpdated(() => {});
 
 onMountedOrActivated(() => {
   updateOffset();
@@ -153,6 +165,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
 
 <style lang="scss" scoped>
 @import '../style/var';
+@import '../style/mixins';
 @import '../style/animation.scss';
 
 .so-dropdown-menu {
@@ -201,6 +214,11 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     color: #333;
     font-size: 14px;
     line-height: 22px;
+
+    div {
+      max-width: 100%;
+      @include ellipsis;
+    }
 
     &::after {
       position: absolute;

@@ -1,6 +1,9 @@
 <template>
-  <transition name="slide-item">
-    <div class="so-dropdown-item" v-show="active">
+  <transition
+    name="slide-item"
+    @before-leave="el => (el.style.display = 'none')"
+  >
+    <div ref="paneRef" class="so-dropdown-item" v-show="isActive">
       <p>这里是 {{ props.title }}</p>
       <slot></slot>
     </div>
@@ -14,7 +17,15 @@ export default {
 </script>
 
 <script setup>
-import { computed, inject, getCurrentInstance, reactive, watch } from 'vue';
+import {
+  computed,
+  inject,
+  getCurrentInstance,
+  ref,
+  watchEffect,
+  nextTick,
+  onUnmounted
+} from 'vue';
 
 const props = defineProps({
   title: String,
@@ -22,26 +33,39 @@ const props = defineProps({
   titleClass: String
 });
 
-const rootActive = inject('rootActive');
-const updatePaneState = inject('updatePaneState');
+const paneRef = ref();
 const instance = getCurrentInstance();
+const rootActive = inject('rootActive'); // current active uid
+const updatePaneState = inject('updatePaneState');
+const updateWrapHeight = inject('updateWrapHeight');
 
-const active = computed(() => {
-  console.log(active);
+const isActive = computed(() => {
   return rootActive.value === instance.uid;
 });
 
-watch(
-  () => rootActive,
-  val => {
-    console.log(val);
+// 更新高度
+watchEffect(() => {
+  if (isActive.value) {
+    nextTick(() => {
+      let activeHeight = paneRef.value?.offsetHeight;
+      updateWrapHeight(activeHeight ? activeHeight + 'px' : 'auto');
+    });
   }
-);
+});
 
+// 注入实例
 updatePaneState({
   uid: instance.uid,
   instance,
   props
+});
+
+onUnmounted(() => {
+  updatePaneState({
+    uid: instance.uid,
+    instance,
+    props
+  });
 });
 </script>
 
@@ -53,6 +77,12 @@ updatePaneState({
   from {
     opacity: 0.5;
     transform: translate3d(0, 20%, 0);
+  }
+}
+
+@keyframes slide-item-leave {
+  to {
+    display: none;
   }
 }
 
