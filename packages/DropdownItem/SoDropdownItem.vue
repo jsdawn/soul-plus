@@ -4,7 +4,6 @@
     @before-leave="el => (el.style.display = 'none')"
   >
     <div ref="paneRef" class="so-dropdown-item" v-show="isActive">
-      <p>这里是 {{ props.title }}</p>
       <slot></slot>
     </div>
   </transition>
@@ -77,12 +76,6 @@ onUnmounted(() => {
   from {
     opacity: 0.5;
     transform: translate3d(0, 20%, 0);
-  }
-}
-
-@keyframes slide-item-leave {
-  to {
-    display: none;
   }
 }
 

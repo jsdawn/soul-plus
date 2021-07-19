@@ -46,6 +46,8 @@ import { reactive, toRefs } from 'vue';
 import logoUrl from 'assets/logo.png';
 import SoDropdownMenu from 'packages/DropdownMenu/SoDropdownMenu.vue';
 import SoDropdownItem from 'packages/DropdownItem/SoDropdownItem.vue';
+// import 'soul-ui/lib/soul-ui.esm.css';
+// import { SoDropdownMenu, SoDropdownItem } from 'soul-ui';
 
 defineProps({
   msg: String

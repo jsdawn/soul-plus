@@ -78,7 +78,7 @@ const state = reactive({
 });
 
 const activeIdx = ref(-1); // 激活的 index
-const panes = ref([]); // 存放 items 实例
+const panes = ref([]); // 存放 dropdown-item 实例
 const rootRef = ref();
 const barRef = ref();
 const scrollParent = useScrollParent(rootRef);
@@ -92,6 +92,7 @@ const activeUid = computed(() => panes.value[activeIdx.value]?.uid);
 
 // 提供 current active uid
 provide('rootActive', activeUid);
+
 // 提供 pane 实例入栈 fun
 provide('updatePaneState', pane => {
   let findPane = panes.value.find(v => v.uid === pane.uid);
@@ -105,7 +106,6 @@ provide('updatePaneState', pane => {
     console.warn('Warn--SoDropdownMenu: lose default slots');
     return;
   }
-
   // 排序 -- paneSlots
   let newPanes = [];
   for (let v of paneSlots.value) {
@@ -118,6 +118,7 @@ provide('updatePaneState', pane => {
     activeIdx.value = 0;
   }
 });
+
 // 提供 wrap heigth-px fun
 provide('updateWrapHeight', heigth => {
   state.wrapHeight = heigth || 'auto';

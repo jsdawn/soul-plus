@@ -1,4 +1,4 @@
-import { ref, unref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { inBrowser } from '../utils';
 
 const overflowScrollReg = /scroll|auto/i;
