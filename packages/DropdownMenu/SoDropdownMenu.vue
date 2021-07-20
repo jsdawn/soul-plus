@@ -201,7 +201,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
         opacity: 1;
       }
 
-      .van-dropdown-menu__title {
+      .so-dropdown-menu__title {
         color: $danger-color;
       }
     }
