@@ -1,11 +1,5 @@
 <template>
   <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
-  <h1>{{ msg }}</h1>
 
   <p>
     <a href="https://vitejs.dev/guide/features.html" target="_blank">
@@ -15,12 +9,17 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <!-- <img :src="logoUrl" alt="" /> -->
+  <img :src="logoUrl" alt="" />
 
-  <button type="button" @click="state.itemName += state.count++">改名</button>
-  <button type="button" @click="state.showItem = !state.showItem">
-    切换显示item {{ state.showItem }}
-  </button>
+  <div>
+    <so-button type="button" @click="state.itemName += state.count++"
+      >改名</so-button
+    >
+    <so-button type="button" @click="state.showItem = !state.showItem">
+      切换显示item {{ state.showItem }}
+    </so-button>
+  </div>
+
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -35,6 +34,10 @@
     </so-dropdown-item>
   </so-dropdown-menu>
 
+  <div style="margin-top: 20px">
+    <so-button>Hello lazy button</so-button>
+  </div>
+
   <div style="height: 200px; backgroundcolor: #ffd01e"></div>
   <div style="height: 200px; backgroundcolor: #ffd01e"></div>
   <div style="height: 200px; backgroundcolor: #ffd01e"></div>
@@ -44,10 +47,8 @@
 <script setup>
 import { reactive, toRefs } from 'vue';
 import logoUrl from 'assets/logo.png';
-import SoDropdownMenu from 'packages/DropdownMenu/SoDropdownMenu.vue';
-import SoDropdownItem from 'packages/DropdownItem/SoDropdownItem.vue';
-// import 'soul-ui/lib/soul-ui.esm.css';
-// import { SoDropdownMenu, SoDropdownItem } from 'soul-ui';
+
+import { SoDropdownMenu, SoDropdownItem, SoButton } from 'packages/index.js';
 
 defineProps({
   msg: String

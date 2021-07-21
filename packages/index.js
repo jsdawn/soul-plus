@@ -1,7 +1,8 @@
 import SoDropdownMenu from './DropdownMenu';
 import SoDropdownItem from './DropdownItem';
+import SoButton from './Button';
 
-const components = [SoDropdownMenu, SoDropdownItem];
+const components = [SoDropdownMenu, SoDropdownItem, SoButton];
 
 const install = app => {
   if (install.installed) return;
@@ -12,6 +13,6 @@ const install = app => {
 
 const SoulUI = { install };
 
-export { install, SoDropdownMenu, SoDropdownItem };
+export { install, SoDropdownMenu, SoDropdownItem, SoButton };
 
 export default SoulUI;
