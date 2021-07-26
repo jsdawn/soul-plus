@@ -29,7 +29,8 @@
     "mobile",
     "frontend",
     "component",
-    "components"
+    "components",
+    "soul"
   ],
   "dependencies": {
     "vue": "^3.0.5",
