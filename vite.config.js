@@ -34,7 +34,7 @@ export default {
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import 'style/variable.scss';`
+        additionalData: `@import 'packages/style/var';`
       }
     }
   },

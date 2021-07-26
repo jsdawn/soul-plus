@@ -1,21 +1,28 @@
 <template>
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <router-link to="/">
+    <section class="ui-face">
+      <h1>SoulUI</h1>
+      <p class="secondary">Mobile UI Components built on Vue3 and Vite</p>
+    </section>
+  </router-link>
+  <router-view></router-view>
 </template>
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue';
-
 // This starter template is using Vue 3 experimental <script setup> SFCs
 // Check out https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+.ui-face {
+  padding: 40px 20px;
+  color: $text-color;
+  h1 {
+    font-size: $font-size-xl;
+    font-weight: normal;
+  }
+  &:hover {
+    color: $text-link-color;
+  }
 }
 </style>

@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, provide, computed, useSlots } from 'vue';
+import { ref, reactive, provide, computed, useSlots, defineExpose } from 'vue';
 import {
   useRect,
   useEventListener,
@@ -135,6 +135,11 @@ const onScroll = () => {
 };
 
 const toggleItem = idx => {
+  if (idx === null || idx === undefined || idx === -1) {
+    state.opened = false;
+    return;
+  }
+
   if (idx === activeIdx.value) {
     state.opened = !state.opened;
   } else {
@@ -162,6 +167,8 @@ onMountedOrActivated(() => {
 });
 
 useEventListener('scroll', onScroll, { target: scrollParent });
+
+defineExpose({ toggleItem });
 </script>
 
 <style lang="scss" scoped>
