@@ -175,9 +175,8 @@ useEventListener('scroll', onScroll, { target: scrollParent });
   &__bar {
     position: relative;
     display: flex;
-    height: 50px;
+    height: 40px;
     background-color: #fff;
-    box-shadow: 0 2px 12px rgba(100, 101, 102, 0.12);
 
     &--opened {
       z-index: $z-index-md + 1;
@@ -213,7 +212,7 @@ useEventListener('scroll', onScroll, { target: scrollParent });
     max-width: 100%;
     padding: 8px;
     color: #333;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 22px;
 
     div {

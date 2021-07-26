@@ -2,6 +2,27 @@
 
 Mobile UI Components built on Vue3 and Vite
 
+## 开发
+
+```
+# 新建分支
+
+# 初始化
+yarn install
+
+# 启动
+yarn run dev
+
+# 打包
+yarn run build
+
+# 本地预览包内容
+yarn run serve
+
+# 打包组件库
+yarn run lib
+```
+
 ## 使用 soul-ui
 
 ### 安装
@@ -35,6 +56,7 @@ yarn add babel-plugin-import -D
 ```
 
 然后，在 `babel.config.js` 中配置
+
 ```
 module.exports = {
   plugins: [
@@ -56,11 +78,13 @@ module.exports = {
 **Vite**
 
 首先，安装 `vite-plugin-style-import`:
+
 ```
 yarn add vite-plugin-style-import -D
 ```
 
 然后，在 `vite.config.js` 中配置
+
 ```
 import styleImport from 'vite-plugin-style-import';
 
@@ -88,7 +112,6 @@ export default defineConfig({
 
 **单文件组件中使用**
 
-
 ```
 import { SoButton } from 'soul-ui';
 
@@ -98,5 +121,6 @@ export default {
 ```
 
 这段代码在生产环境将被解析为
+
 - `import SoButton from 'soul-ui/es/so-button'`;
 - `import 'soul-ui/es/so-button.css'`
