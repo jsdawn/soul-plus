@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, provide, computed, useSlots, defineExpose } from 'vue';
+import { ref, reactive, provide, computed, useSlots } from 'vue';
 import {
   useRect,
   useEventListener,

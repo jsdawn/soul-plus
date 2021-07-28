@@ -10,14 +10,14 @@ export default {
     styleImport({
       libs: [
         {
-          libraryName: 'soul-ui',
+          libraryName: 'soul-plus',
           ensureStyleFile: true,
           // 自定义样式文件转换
           resolveStyle: name => {
-            return `soul-ui/es/${name}.css`;
+            return `soul-plus/es/${name}.css`;
           },
           resolveComponent: name => {
-            return `soul-ui/es/${name}`;
+            return `soul-plus/es/${name}`;
           }
         }
       ]

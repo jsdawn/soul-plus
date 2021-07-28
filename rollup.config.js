@@ -9,7 +9,7 @@ import commonjs from 'rollup-plugin-commonjs';
 const inputs = [
   {
     input: 'packages/index.js',
-    name: 'soul-ui'
+    name: 'soul-plus'
   },
   {
     input: 'packages/DropdownMenu/index.js',
@@ -30,8 +30,8 @@ export default inputs.map(item => ({
   output: [
     // {
     //   globals: { vue: 'Vue' },
-    //   name: 'soul-ui',
-    //   file: 'lib/soul-ui.umd.js',
+    //   name: 'soul-plus',
+    //   file: 'lib/soul-plus.umd.js',
     //   format: 'umd'
     // },
     {

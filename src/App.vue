@@ -1,7 +1,7 @@
 <template>
   <router-link to="/">
     <section class="ui-face">
-      <h1>SoulUI</h1>
+      <h1>SoulPlus</h1>
       <p class="secondary">Mobile UI Components built on Vue3 and Vite</p>
     </section>
   </router-link>

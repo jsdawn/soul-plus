@@ -1,4 +1,4 @@
-# soul-ui
+# soul-plus
 
 Mobile UI Components built on Vue3 and Vite
 
@@ -23,12 +23,12 @@ yarn run serve
 yarn run lib
 ```
 
-## 使用 soul-ui
+## 使用 soul-plus
 
 ### 安装
 
 ```
-yarn add soul-ui
+yarn add soul-plus
 ```
 
 ### 完整引入
@@ -38,11 +38,11 @@ yarn add soul-ui
 
 import { createApp } from 'vue'
 
-import SoulUI from 'soul-ui';
-import 'soul-ui/es/soul-ui.css';
+import SoulPlus from 'soul-plus';
+import 'soul-plus/es/soul-plus.css';
 
 const app = createApp(App)
-app.use(SoulUI)
+app.use(SoulPlus)
 ```
 
 ### 按需引入
@@ -63,13 +63,13 @@ module.exports = {
     [
       "import",
       {
-        libraryName: "soul-ui",
+        libraryName: "soul-plus",
         libraryDirectory: "lib",
         customStyleName: (name) => {
-          return `soul-ui/es/${name}.css`;
+          return `soul-plus/es/${name}.css`;
         },
       },
-      "soul-ui",
+      "soul-plus",
     ],
   ]
 };
@@ -94,13 +94,13 @@ export default defineConfig({
     styleImport({
       libs: [
         {
-          libraryName: 'soul-ui',
+          libraryName: 'soul-plus',
           ensureStyleFile: true,
           resolveStyle: name => {
-            return `soul-ui/es/${name}.css`;
+            return `soul-plus/es/${name}.css`;
           },
           resolveComponent: name => {
-            return `soul-ui/es/${name}`;
+            return `soul-plus/es/${name}`;
           }
         }
       ]
@@ -113,7 +113,7 @@ export default defineConfig({
 **单文件组件中使用**
 
 ```
-import { SoButton } from 'soul-ui';
+import { SoButton } from 'soul-plus';
 
 export default {
   components: { SoButton }
@@ -122,5 +122,5 @@ export default {
 
 这段代码在生产环境将被解析为
 
-- `import SoButton from 'soul-ui/es/so-button'`;
-- `import 'soul-ui/es/so-button.css'`
+- `import SoButton from 'soul-plus/es/so-button'`;
+- `import 'soul-plus/es/so-button.css'`

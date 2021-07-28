@@ -11,8 +11,8 @@ const install = app => {
   });
 };
 
-const SoulUI = { install };
+const SoulPlus = { install };
 
 export { install, SoDropdownMenu, SoDropdownItem, SoButton };
 
-export default SoulUI;
+export default SoulPlus;
