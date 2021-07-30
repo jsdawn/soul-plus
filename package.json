@@ -16,7 +16,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lib": "rm -r es && rm -r lib && rollup -c"
+    "lib": "rm -rf es && rm -rf lib && rollup -c"
   },
   "repository": {
     "type": "git",

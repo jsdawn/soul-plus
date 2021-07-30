@@ -1,6 +1,6 @@
 import SoDropdownMenu from './DropdownMenu';
 import SoDropdownItem from './DropdownItem';
-import SoButton from './Button';
+import SoButton from './Button/index';
 
 const components = [SoDropdownMenu, SoDropdownItem, SoButton];
 
