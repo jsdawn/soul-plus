@@ -12,11 +12,13 @@ const NOT_COMPS = ['index.js', 'style', 'hooks'];
 // sync comps files
 let comps = fs.readdirSync('./packages');
 comps = comps.filter(v => !NOT_COMPS.includes(v));
-// format comps data
+
+// format by { input: 'packages/Button/index.js', name: 'so-button' }
 const inputComps = comps.map(fileName => ({
   input: `packages/${fileName}/index.js`,
   name: 'so' + fileName.replace(/([A-Z])/g, '-$1').toLowerCase()
 }));
+
 // default comps
 const defaultComps = [{ input: 'packages/index.js', name: 'soul-plus' }];
 
