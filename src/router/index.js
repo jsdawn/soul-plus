@@ -12,6 +12,10 @@ const routes = [
   {
     path: '/dropdown-menu',
     component: () => import('../pages/dropdownMenu.vue')
+  },
+  {
+    path: '/overlay',
+    component: () => import('../pages/overlay.vue')
   }
 ];
 

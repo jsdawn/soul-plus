@@ -1,8 +1,9 @@
 import SoDropdownMenu from './DropdownMenu';
 import SoDropdownItem from './DropdownItem';
-import SoButton from './Button/index';
+import SoButton from './Button';
+import SoOverlay from './Overlay';
 
-const components = [SoDropdownMenu, SoDropdownItem, SoButton];
+const components = [SoDropdownMenu, SoDropdownItem, SoButton, SoOverlay];
 
 const install = app => {
   if (install.installed) return;
@@ -13,6 +14,6 @@ const install = app => {
 
 const SoulPlus = { install };
 
-export { install, SoDropdownMenu, SoDropdownItem, SoButton };
+export { install, SoDropdownMenu, SoDropdownItem, SoButton, SoOverlay };
 
 export default SoulPlus;

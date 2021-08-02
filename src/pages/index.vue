@@ -2,10 +2,16 @@
   <div class="page-index">
     <h3 class="comp-title">基础组件</h3>
     <div class="components">
-      <router-link to="/button"> <span>Button 按钮</span> <i>&gt;</i> </router-link>
+      <router-link to="/button">
+        <span>Button 按钮</span> <i>&gt;</i>
+      </router-link>
 
       <router-link to="/dropdown-menu">
         <span>DropdownMenu 下拉菜单</span> <i>&gt;</i>
+      </router-link>
+
+      <router-link to="/overlay">
+        <span>Overlay 遮罩层</span> <i>&gt;</i>
       </router-link>
     </div>
   </div>
