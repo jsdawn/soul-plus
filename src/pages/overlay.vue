@@ -3,17 +3,15 @@
     <h3 class="comp-title">遮罩层</h3>
     <div class="comp-wrap">
       <so-button type="primary" @click="show = !show">显示遮罩层</so-button>
-      <so-overlay v-model:show="show" @click="show = !show"></so-overlay>
+
+      <so-overlay :show="show" @click="show = !show"></so-overlay>
     </div>
 
     <h3 class="comp-title">插槽内容</h3>
     <div class="comp-wrap">
       <so-button type="primary" @click="show2 = !show2">插槽内容</so-button>
-      <so-overlay
-        class="over-wrap"
-        v-model:show="show2"
-        @click="show2 = !show2"
-      >
+
+      <so-overlay class="over-wrap" :show="show2" @click="show2 = !show2">
         <div class="content" @click.stop>这里是 slot 内容</div>
       </so-overlay>
     </div>

@@ -3,6 +3,12 @@
     <h3 class="comp-title">弹出层</h3>
     <div class="comp-wrap">
       <so-button type="primary" @click="show = !show">显示弹出层</so-button>
+
+      <so-popup
+        v-model:show="show"
+        position="left"
+        :style="{ width: '30%', height: '100%' }"
+      ></so-popup>
     </div>
   </div>
 </template>

@@ -14,7 +14,9 @@
 </template>
 
 <script setup>
-import { watch, ref } from 'vue';
+// https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md
+
+import { watch, ref,useAttrs } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();

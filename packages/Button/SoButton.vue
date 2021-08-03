@@ -1,7 +1,6 @@
 <template>
   <button
-    class="so-button"
-    :class="classes"
+    :class="['so-button', classes]"
     type="button"
     :disabled="disabled || loading"
     @click="handleClick"
