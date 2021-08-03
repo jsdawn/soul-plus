@@ -70,7 +70,6 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @import '../style/var';
-@import '../style/animation.scss';
 
 @keyframes slide-item-enter {
   from {

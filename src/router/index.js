@@ -16,6 +16,10 @@ const routes = [
   {
     path: '/overlay',
     component: () => import('../pages/overlay.vue')
+  },
+  {
+    path: '/popup',
+    component: () => import('../pages/popup.vue')
   }
 ];
 
