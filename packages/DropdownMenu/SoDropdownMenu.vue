@@ -44,7 +44,7 @@
         ></div>
       </transition>
 
-      <transition name="so-slide-down" :onAfterLeave="onClosed">
+      <transition name="so-slide-down" @after-leave="onClosed">
         <div
           class="so-dropdown-menu__content"
           v-show="state.opened"

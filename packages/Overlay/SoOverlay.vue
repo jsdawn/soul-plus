@@ -1,6 +1,11 @@
 <template>
   <transition name="so-fade">
-    <div class="so-overlay" v-if="initRender" v-show="props.show">
+    <div
+      class="so-overlay"
+      v-if="initRender"
+      v-show="props.show"
+      :style="{ zIndex: props.zIndex }"
+    >
       <slot></slot>
     </div>
   </transition>

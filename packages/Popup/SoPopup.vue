@@ -1,15 +1,26 @@
 <template>
   <teleport :to="teleport ? teleport : 'body'" :disabled="!props.teleport">
-    <so-overlay :show="props.show">
+    <so-overlay
+      :show="props.show"
+      :z-index="props.zIndex"
+      @click="clickOverlay"
+    >
       <slot name="overlay"></slot>
     </so-overlay>
 
-    <transition :name="transitionName" appear>
+    <transition
+      :name="transitionName"
+      appear
+      @after-enter="onOpened"
+      @after-leave="onClosed"
+    >
       <div
         :class="['so-popup', classes]"
         v-bind="attrs"
         v-if="initRender"
         v-show="props.show"
+        :style="{ zIndex: props.zIndex }"
+        @click="onClick"
       ></div>
     </transition>
   </teleport>
@@ -22,18 +33,32 @@ export default {
 </script>
 
 <script setup>
-import { useAttrs, computed } from 'vue';
+import { useAttrs, computed, watch } from 'vue';
 // utils
 import { useTruthy } from '../hooks';
+import { callInterceptor } from '../hooks/callInterceptor';
 // components
 import SoOverlay from '../Overlay';
 
 const props = defineProps({
-  show: Boolean,
+  show: Boolean, // v-model
   teleport: [String, Element],
   position: { type: String, default: 'center' }, // top bottom right left
-  transition: String
+  transition: String,
+  closeOnClickOverlay: { type: Boolean, default: true },
+  zIndex: [Number, String],
+  beforeClose: Function
 });
+
+const emit = defineEmits([
+  'update:show',
+  'click',
+  'click-overlay',
+  'open',
+  'opened',
+  'close',
+  'closed'
+]);
 
 const attrs = useAttrs();
 
@@ -53,7 +78,43 @@ const transitionName = computed(() => {
   return props.transition || slideName;
 });
 
-console.log(attrs);
+// 开启
+const open = () => {
+  emit('open');
+};
+
+// 关闭
+const triggerClose = () => {
+  if (props.show) {
+    emit('close');
+    emit('update:show', false);
+  }
+};
+
+const close = () => {
+  callInterceptor({
+    interceptor: props.beforeClose,
+    done: triggerClose
+  });
+};
+
+const clickOverlay = () => {
+  emit('click-overlay');
+  if (props.closeOnClickOverlay) {
+    close();
+  }
+};
+
+const onClick = event => emit('click', event);
+const onOpened = () => emit('opened');
+const onClosed = () => emit('closed');
+
+watch(
+  () => props.show,
+  value => {
+    value ? open() : close();
+  }
+);
 </script>
 
 <style lang="scss" scoped>

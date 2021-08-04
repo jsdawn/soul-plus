@@ -7,6 +7,7 @@
       <so-popup
         v-model:show="show"
         position="left"
+        z-index="2000"
         :style="{ width: '30%', height: '100%' }"
       ></so-popup>
     </div>
