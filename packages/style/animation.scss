@@ -68,6 +68,32 @@
   }
 }
 
+@keyframes so-swing-top-in {
+  0% {
+    transform: rotateX(-100deg);
+    transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+@keyframes so-swing-top-out {
+  0% {
+    transform: rotateX(0deg);
+    transform-origin: top;
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(-100deg);
+    transform-origin: top;
+    opacity: 0;
+  }
+}
+
 @keyframes so-rotate {
   from {
     transform: rotate(0deg);
@@ -80,12 +106,12 @@
 
 .so-fade {
   &-enter-active {
-    animation: $animation-duration-base so-fade-in both
+    animation: so-fade-in $animation-duration-base both
       $animation-timing-function-enter;
   }
 
   &-leave-active {
-    animation: $animation-duration-base so-fade-out both
+    animation: so-fade-out $animation-duration-base both
       $animation-timing-function-leave;
   }
 }
@@ -135,5 +161,16 @@
   &-leave-active {
     animation: so-slide-right-leave $animation-duration-base both
       $animation-timing-function-leave;
+  }
+}
+
+.so-swing-top {
+  &-enter-active {
+    animation: so-swing-top-in $animation-duration-base both
+      cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  &-leave-active {
+    animation: so-swing-top-out $animation-duration-base both
+      cubic-bezier(0.6, -0.28, 0.735, 0.045);
   }
 }

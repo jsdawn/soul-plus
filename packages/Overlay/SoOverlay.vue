@@ -1,7 +1,7 @@
 <template>
   <transition name="so-fade">
     <div
-      class="so-overlay"
+      :class="['so-overlay', className]"
       v-if="initRender"
       v-show="props.show"
       :style="{ zIndex: props.zIndex }"
@@ -16,7 +16,8 @@ import { useTruthy } from '../hooks';
 
 const props = defineProps({
   show: Boolean,
-  zIndex: [Number, String]
+  zIndex: [Number, String],
+  className: String
 });
 
 const initRender = useTruthy(() => props.show);

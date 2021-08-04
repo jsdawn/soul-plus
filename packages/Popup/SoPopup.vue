@@ -1,6 +1,8 @@
 <template>
   <teleport :to="teleport ? teleport : 'body'" :disabled="!props.teleport">
     <so-overlay
+      :class-name="overlayClass"
+      v-if="overlay"
       :show="props.show"
       :z-index="props.zIndex"
       @click="clickOverlay"
@@ -15,6 +17,7 @@
       @after-leave="onClosed"
     >
       <div
+        ref="popupRef"
         :class="['so-popup', classes]"
         v-bind="attrs"
         v-if="initRender"
@@ -33,20 +36,23 @@ export default {
 </script>
 
 <script setup>
-import { useAttrs, computed, watch } from 'vue';
+import { ref, useAttrs, computed, watch, onMounted } from 'vue';
 // utils
-import { useTruthy } from '../hooks';
+import { useTruthy, useLockScroll } from '../hooks';
 import { callInterceptor } from '../hooks/callInterceptor';
 // components
 import SoOverlay from '../Overlay';
 
 const props = defineProps({
   show: Boolean, // v-model
+  overlay: { type: Boolean, default: true },
+  overlayClass: String,
+  closeOnClickOverlay: { type: Boolean, default: true },
   teleport: [String, Element],
   position: { type: String, default: 'center' }, // top bottom right left
   transition: String,
-  closeOnClickOverlay: { type: Boolean, default: true },
   zIndex: [Number, String],
+  lockScroll: { type: Boolean, default: true },
   beforeClose: Function
 });
 
@@ -60,8 +66,9 @@ const emit = defineEmits([
   'closed'
 ]);
 
-const attrs = useAttrs();
+const popupRef = ref();
 
+const attrs = useAttrs();
 const initRender = useTruthy(() => props.show);
 
 const classes = computed(() => {
@@ -73,7 +80,7 @@ const classes = computed(() => {
 const transitionName = computed(() => {
   let slideName =
     props.position === 'center'
-      ? 'so-fade'
+      ? 'so-popup-swing-top'
       : `so-popup-slide-${props.position}`;
   return props.transition || slideName;
 });
@@ -115,6 +122,16 @@ watch(
     value ? open() : close();
   }
 );
+
+onMounted(() => {
+  if (props.show) {
+    open();
+  }
+});
+
+useLockScroll(popupRef, () => props.show && props.lockScroll);
+
+defineExpose({ popupRef });
 </script>
 
 <style lang="scss" scoped>
@@ -133,7 +150,7 @@ watch(
   &--center {
     top: 50%;
     left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0) rotateX(0deg);
   }
 
   &--top {
@@ -159,6 +176,8 @@ watch(
     left: 0;
     transform: translate3d(0, -50%, 0);
   }
+
+  // animation
 
   &-slide-top-enter-active,
   &-slide-left-enter-active,
@@ -193,5 +212,48 @@ watch(
   &-slide-left-leave-active {
     transform: translate3d(-100%, -50%, 0);
   }
+
+  @keyframes swing-top-in {
+    0% {
+      transform: translate3d(-50%, -50%, 0) rotateX(-100deg);
+      transform-origin: top;
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(-50%, -50%, 0) rotateX(0deg);
+      transform-origin: top;
+      opacity: 1;
+    }
+  }
+
+  @keyframes swing-top-out {
+    0% {
+      transform: translate3d(-50%, -50%, 0) rotateX(0deg);
+      transform-origin: top;
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(-50%, -50%, 0) rotateX(-100deg);
+      transform-origin: top;
+      opacity: 0;
+    }
+  }
+
+  &-swing-top {
+    &-enter-active {
+      animation: swing-top-in $animation-duration-base both
+        cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    &-leave-active {
+      animation: swing-top-out $animation-duration-base both
+        cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.so-overflow-hidden {
+  overflow: hidden !important;
 }
 </style>
