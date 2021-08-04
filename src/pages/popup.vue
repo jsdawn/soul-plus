@@ -65,7 +65,4 @@ const showLeft = ref(false);
 const showRight = ref(false);
 </script>
 
-<style lang="scss" scoped>
-.page-popup {
-}
-</style>
+<style lang="scss" scoped></style>
