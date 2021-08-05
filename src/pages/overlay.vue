@@ -4,7 +4,7 @@
     <div class="comp-wrap">
       <so-button type="primary" @click="show = !show">显示遮罩层</so-button>
 
-      <so-overlay :show="show" @click="show = !show"></so-overlay>
+      <so-overlay :show="show" lock-scroll @click="show = !show"></so-overlay>
     </div>
 
     <h3 class="comp-title">插槽内容</h3>

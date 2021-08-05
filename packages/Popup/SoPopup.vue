@@ -92,17 +92,17 @@ const open = () => {
 
 // 关闭
 const triggerClose = () => {
-  if (props.show) {
-    emit('close');
-    emit('update:show', false);
-  }
+  emit('close');
+  emit('update:show', false);
 };
 
 const close = () => {
-  callInterceptor({
-    interceptor: props.beforeClose,
-    done: triggerClose
-  });
+  if (props.show) {
+    callInterceptor({
+      interceptor: props.beforeClose,
+      done: triggerClose
+    });
+  }
 };
 
 const clickOverlay = () => {

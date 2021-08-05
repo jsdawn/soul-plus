@@ -5,12 +5,16 @@ export function callInterceptor({ interceptor, args, done, canceled } = {}) {
     // interceptorVal ? done : cancel
     const interceptorVal = interceptor.apply(null, args || []);
 
+    console.log(interceptorVal);
+
     if (isPromise(interceptorVal)) {
       interceptorVal
         .then(value => {
           value ? done?.() : canceled?.();
         })
-        .catch(() => {});
+        .catch(err => {
+          console.warn('error callInterceptor: ' + err);
+        });
     } else if (interceptorVal) {
       done?.();
     } else if (canceled) {

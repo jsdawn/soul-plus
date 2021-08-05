@@ -1,6 +1,7 @@
 <template>
   <transition name="so-fade">
     <div
+      ref="overlayRef"
       :class="['so-overlay', className]"
       v-if="initRender"
       v-show="props.show"
@@ -12,15 +13,20 @@
 </template>
 
 <script setup>
-import { useTruthy } from '../hooks';
+import { ref } from 'vue';
+import { useTruthy, useLockScroll } from '../hooks';
 
 const props = defineProps({
   show: Boolean,
   zIndex: [Number, String],
-  className: String
+  className: String,
+  lockScroll: Boolean
 });
 
+const overlayRef = ref();
 const initRender = useTruthy(() => props.show);
+
+useLockScroll(overlayRef, () => props.show && props.lockScroll);
 </script>
 
 <style lang="scss" scoped>
