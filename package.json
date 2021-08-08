@@ -1,12 +1,12 @@
 {
   "name": "soul-plus",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Mobile UI Components built on Vue3 and Vite",
   "author": "jsdawn",
   "license": "MIT",
   "main": "lib/soul-plus.js",
   "module": "es/soul-plus.js",
-  "style": "es/soul-plus.css",
+  "style": "lib/theme-chalk/index.css",
   "files": [
     "lib",
     "es",
