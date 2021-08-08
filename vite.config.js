@@ -34,7 +34,7 @@ export default {
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import 'packages/style/var';`
+        additionalData: `@import 'packages/theme-chalk/src/common/var.scss';`
       }
     }
   },

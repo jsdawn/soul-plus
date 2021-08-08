@@ -39,7 +39,7 @@ yarn add soul-plus
 import { createApp } from 'vue'
 
 import SoulPlus from 'soul-plus';
-import 'soul-plus/es/soul-plus.css';
+import 'soul-plus/lib/theme-chalk/index.css';
 
 const app = createApp(App)
 app.use(SoulPlus)
@@ -66,7 +66,7 @@ module.exports = {
         libraryName: "soul-plus",
         libraryDirectory: "lib",
         customStyleName: (name) => {
-          return `soul-plus/es/${name}.css`;
+          return `soul-plus/lib/theme-chalk/${name}.css`;
         },
       },
       "soul-plus",
@@ -97,7 +97,7 @@ export default defineConfig({
           libraryName: 'soul-plus',
           ensureStyleFile: true,
           resolveStyle: name => {
-            return `soul-plus/es/${name}.css`;
+            return `soul-plus/lib/theme-chalk/${name}.css`;
           },
           resolveComponent: name => {
             return `soul-plus/es/${name}`;
@@ -123,4 +123,4 @@ export default {
 这段代码在生产环境将被解析为
 
 - `import SoButton from 'soul-plus/es/so-button'`;
-- `import 'soul-plus/es/so-button.css'`
+- `import 'soul-plus/lib/theme-chalk/so-button.css'`

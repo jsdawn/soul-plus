@@ -1,6 +1,6 @@
 {
   "name": "soul-plus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mobile UI Components built on Vue3 and Vite",
   "author": "jsdawn",
   "license": "MIT",
@@ -16,7 +16,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lib": "rm -rf es && rm -rf lib && rollup -c"
+    "lib": "rm -rf es && rm -rf lib && rollup -c",
+    "lib:theme": "cd packages/theme-chalk && yarn clean && yarn build"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 <template>
   <transition
-    name="slide-item"
+    name="so-dropdown-item-slide-up"
     @before-leave="el => (el.style.display = 'none')"
   >
     <div ref="paneRef" class="so-dropdown-item" v-show="isActive">
@@ -67,21 +67,3 @@ onUnmounted(() => {
   });
 });
 </script>
-
-<style lang="scss" scoped>
-@import '../style/var';
-
-@keyframes slide-item-enter {
-  from {
-    opacity: 0.5;
-    transform: translate3d(0, 20%, 0);
-  }
-}
-
-.slide-item {
-  &-enter-active {
-    animation: slide-item-enter $animation-duration-base both
-      $animation-timing-function-enter;
-  }
-}
-</style>

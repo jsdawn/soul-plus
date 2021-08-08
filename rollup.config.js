@@ -9,7 +9,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 
 // not comps files
-const NOT_COMPS = ['index.js', 'style', 'hooks'];
+const NOT_COMPS = ['index.js', 'style', 'hooks', 'theme-chalk'];
 // sync comps files
 let comps = fs.readdirSync('./packages');
 comps = comps.filter(v => !NOT_COMPS.includes(v));
