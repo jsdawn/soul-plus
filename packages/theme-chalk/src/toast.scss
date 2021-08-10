@@ -1,0 +1,23 @@
+@import './common/var.scss';
+@import './common/animation.scss';
+
+.so-toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: content-box;
+  padding: 9px 15px;
+  border-radius: 3px;
+  min-width: 60px;
+  line-height: 1.5;
+  text-align: center;
+  word-break: break-all;
+  font-size: $font-size-md;
+  color: #fff;
+  background-color: rgba(58, 58, 58, 0.9);
+  transition: all $animation-duration-fast;
+
+  &--unclickable {
+    background-color: transparent;
+  }
+}

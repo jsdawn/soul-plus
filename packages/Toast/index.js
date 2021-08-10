@@ -1,6 +1,7 @@
-import SoToast from './SoToast.vue';
+import Toast from './toast';
 
-SoToast.install = function (app) {
-  app.component('SoToast', SoToast);
+Toast.install = app => {
+  app.config.globalProperties.$toast = Toast;
 };
-export default SoToast;
+
+export default Toast;

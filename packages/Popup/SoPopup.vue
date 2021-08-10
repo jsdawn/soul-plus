@@ -1,8 +1,8 @@
 <template>
-  <teleport :to="teleport ? teleport : 'body'" :disabled="!props.teleport">
+  <teleport :to="props.teleport" :disabled="!props.teleport">
     <so-overlay
       :class-name="overlayClass"
-      v-if="overlay"
+      v-if="props.overlay"
       :show="props.show"
       :z-index="props.zIndex"
       @click="clickOverlay"
@@ -19,10 +19,10 @@
       <div
         ref="popupRef"
         :class="['so-popup', classes]"
-        v-bind="attrs"
         v-if="initRender"
         v-show="props.show"
         :style="{ zIndex: props.zIndex }"
+        v-bind="attrs"
         @click="onClick"
       >
         <slot></slot>
@@ -50,7 +50,7 @@ const props = defineProps({
   overlay: { type: Boolean, default: true },
   overlayClass: String,
   closeOnClickOverlay: { type: Boolean, default: true },
-  teleport: [String, Element],
+  teleport: { type: [String, Element], default: 'body' },
   position: { type: String, default: 'center' }, // top bottom right left
   transition: String,
   zIndex: [Number, String],
