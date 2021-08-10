@@ -24,7 +24,9 @@
         v-show="props.show"
         :style="{ zIndex: props.zIndex }"
         @click="onClick"
-      ></div>
+      >
+        <slot></slot>
+      </div>
     </transition>
   </teleport>
 </template>
@@ -133,4 +135,3 @@ useLockScroll(popupRef, () => props.show && props.lockScroll);
 
 defineExpose({ popupRef });
 </script>
-

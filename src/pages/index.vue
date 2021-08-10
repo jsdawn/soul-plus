@@ -16,7 +16,8 @@ const baseComps = ref([
   { name: 'Button 按钮', path: '/button' },
   { name: 'DropdownMenu 下拉菜单', path: '/dropdown-menu' },
   { name: 'Overlay 遮罩层', path: '/overlay' },
-  { name: 'Popup 弹出层', path: '/popup' }
+  { name: 'Popup 弹出层', path: '/popup' },
+  { name: 'Toast 轻提示', path: '/toast' }
 ]);
 </script>
 

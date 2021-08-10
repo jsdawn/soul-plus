@@ -20,6 +20,10 @@ const routes = [
   {
     path: '/popup',
     component: () => import('../pages/popup.vue')
+  },
+  {
+    path: '/toast',
+    component: () => import('../pages/toast.vue')
   }
 ];
 
