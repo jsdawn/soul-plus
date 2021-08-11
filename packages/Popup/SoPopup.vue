@@ -1,5 +1,8 @@
 <template>
-  <teleport :to="props.teleport" :disabled="!props.teleport">
+  <teleport
+    :to="props.teleport"
+    :disabled="!props.teleport || props.disabledTeleport"
+  >
     <so-overlay
       :class-name="overlayClass"
       v-if="props.overlay"
@@ -51,6 +54,7 @@ const props = defineProps({
   overlayClass: String,
   closeOnClickOverlay: { type: Boolean, default: true },
   teleport: { type: [String, Element], default: 'body' },
+  disabledTeleport: Boolean,
   position: { type: String, default: 'center' }, // top bottom right left
   transition: String,
   zIndex: [Number, String],

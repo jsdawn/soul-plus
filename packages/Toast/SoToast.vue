@@ -1,14 +1,17 @@
 <template>
   <so-popup
-    class="so-toast"
-    v-model:show="props.show"
+    :class="{
+      'so-toast': true,
+      [`so-toast--${props.position}`]: props.position
+    }"
+    v-model:show="show"
+    :disabled-teleport="true"
     :overlay="props.overlay || props.forbidClick"
     :overlay-class="overlayClasses"
     :close-on-click-overlay="props.closeOnClickOverlay"
     :transition="props.transition || 'so-fade'"
     :lock-scroll="props.lockScroll"
     @closed="onClosed"
-    @[`update:show`]="updateShow"
   >
     <div
       v-if="props.type === 'html'"
@@ -20,12 +23,12 @@
 </template>
 
 <script setup>
-import { computed, watch, onUnmounted } from 'vue';
+import { computed, watch, onUnmounted, ref } from 'vue';
 import SoPopup from '../Popup';
 
 const props = defineProps({
-  show: Boolean, // v-model
   type: { type: String, default: 'text' },
+  position: { type: String, default: 'bottom' }, // middle bottom
   message: String,
   duration: { type: Number, default: 2000 },
   transition: String,
@@ -36,16 +39,15 @@ const props = defineProps({
   lockScroll: { type: Boolean, default: false }
 });
 
-const emit = defineEmits(['update:show', 'closed']);
+const emit = defineEmits(['closed']);
 
+const show = ref(true);
 let timer;
 
 const overlayClasses = computed(() => {
   let forbidClass = props.forbidClick ? 'so-toast--unclickable' : '';
   return props.overlayClass || forbidClass;
 });
-
-const updateShow = show => emit('update:show', show);
 
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
@@ -56,19 +58,22 @@ const onClosed = () => {
   clearTimer();
 };
 
+const close = () => (show.value = false);
+
 watch(
-  () => [props.show, props.type, props.message, props.duration],
+  () => [show, props.type, props.message, props.duration],
   () => {
     clearTimer();
-    if (props.show && props.duration > 0) {
-      timer = setTimeout(() => {
-        updateShow(false);
-      }, props.duration);
+    if (show && props.duration > 0) {
+      timer = setTimeout(close, props.duration);
     }
-  }
+  },
+  { immediate: true }
 );
 
 onUnmounted(() => {
   clearTimer();
 });
+
+defineExpose({ close });
 </script>
