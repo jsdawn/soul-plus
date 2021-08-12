@@ -1,7 +1,7 @@
-import Toast from './toast';
+import SoToast from './toast';
 
-Toast.install = app => {
-  app.config.globalProperties.$toast = Toast;
+SoToast.install = app => {
+  app.config.globalProperties.$toast = SoToast;
 };
 
-export default Toast;
+export default SoToast;

@@ -1,6 +1,6 @@
 {
   "name": "soul-plus",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Mobile UI Components built on Vue3 and Vite",
   "author": "jsdawn",
   "license": "MIT",
@@ -21,8 +21,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/jsdawn/soul-ui.git"
+    "url": "https://gitee.com/jsdawn/soul-plus.git"
   },
+  "homepage": "https://gitee.com/jsdawn/soul-plus.git",
   "keywords": [
     "ui",
     "vue",

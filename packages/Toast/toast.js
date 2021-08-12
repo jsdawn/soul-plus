@@ -6,7 +6,7 @@ const defaultOpts = {
   type: 'text',
   position: 'bottom', // middle bottom
   message: '',
-  duration: 0, // 默认2秒关闭
+  duration: 2000, // 默认2秒关闭
   transition: undefined,
   overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,
@@ -17,7 +17,7 @@ const defaultOpts = {
 
 const clear = () => {
   for (let instance of instances) {
-    instance.vm.component?.ctx.close();
+    instance.vm.component?.exposed.close();
   }
   instances = [];
 };
@@ -49,7 +49,7 @@ const Toast = function (opts) {
   document.body.appendChild(container.firstElementChild);
 
   return {
-    close: () => (vm.component.proxy.show = false)
+    close: () => vm.component.exposed.close()
   };
 };
 
