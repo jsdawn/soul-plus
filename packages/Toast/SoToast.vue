@@ -9,7 +9,7 @@
     :overlay="props.overlay || props.forbidClick"
     :overlay-class="overlayClasses"
     :close-on-click-overlay="props.closeOnClickOverlay"
-    :transition="props.transition || 'so-fade'"
+    :transition="transitionName"
     :lock-scroll="props.lockScroll"
     @closed="onClosed"
   >
@@ -30,7 +30,7 @@ const props = defineProps({
   type: { type: String, default: 'text' },
   position: { type: String, default: 'bottom' }, // middle bottom
   message: String,
-  duration: { type: Number, default: 2000 },
+  duration: { type: Number, default: 2000 }, // 0则不关闭
   transition: String,
   overlay: { type: Boolean, default: false },
   overlayClass: String,
@@ -47,6 +47,11 @@ let timer;
 const overlayClasses = computed(() => {
   let forbidClass = props.forbidClick ? 'so-toast--unclickable' : '';
   return props.overlayClass || forbidClass;
+});
+
+const transitionName = computed(() => {
+  let name = props.position === 'bottom' ? 'so-toast-slide-up' : 'so-fade';
+  return props.transition || name;
 });
 
 const clearTimer = () => {

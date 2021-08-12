@@ -1,0 +1,32 @@
+@import './common/var.scss';
+@import './mixins/mixins.scss';
+
+@font-face {
+  font-family: 'so-icon'; /* Project id 2738761 */
+  @include font-src($font-path);
+}
+
+.so-icon {
+  font-family: 'so-icon';
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ↓↓↓↓↓↓ icons class ↓↓↓↓↓↓
+
+.so-icon-fail:before {
+  content: '\e6a1';
+}
+
+.so-icon-success:before {
+  content: '\e6b6';
+}
+
+.so-icon-arrow:before {
+  content: '\e695';
+}
+
+.so-icon-arrow-left:before {
+  content: '\e694';
+}

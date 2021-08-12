@@ -6,9 +6,9 @@ const defaultOpts = {
   type: 'text',
   position: 'bottom', // middle bottom
   message: '',
-  duration: 2000,
+  duration: 0, // 默认2秒关闭
   transition: undefined,
-  overlay: false,
+  overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,
   forbidClick: false, // 静止点击背景
   closeOnClickOverlay: false,
@@ -23,7 +23,7 @@ const clear = () => {
 };
 
 const Toast = function (opts) {
-  clear();
+  clear(); // 只存在当前 toast
 
   if (typeof opts === 'string') {
     opts = { message: opts };
@@ -44,7 +44,6 @@ const Toast = function (opts) {
 
   // 使用 render 方法转换成真实dom
   render(vm, container);
-
   instances.push({ vm });
 
   document.body.appendChild(container.firstElementChild);
