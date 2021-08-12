@@ -29,6 +29,7 @@ const showToast2 = () => {
 const closeToast = () => {
   tt.close();
 };
+
 const closeToastAll = () => {
   SoToast.clear();
 };

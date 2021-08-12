@@ -1,0 +1,37 @@
+{
+  "id": "2738761",
+  "name": "soul-plus",
+  "font_family": "so-icon",
+  "css_prefix_text": "so-icon-",
+  "description": "soul-plus 使用icon组件",
+  "glyphs": [
+    {
+      "icon_id": "21712575",
+      "name": "fail",
+      "font_class": "fail",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "21712692",
+      "name": "success",
+      "font_class": "success",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "21712494",
+      "name": "arrow",
+      "font_class": "arrow",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "21712492",
+      "name": "arrow-left",
+      "font_class": "arrow-left",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    }
+  ]
+}
