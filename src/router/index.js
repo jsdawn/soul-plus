@@ -28,6 +28,10 @@ const routes = [
   {
     path: '/icon',
     component: () => import('../pages/icon.vue')
+  },
+  {
+    path: '/tabs',
+    component: () => import('../pages/tabs.vue')
   }
 ];
 
