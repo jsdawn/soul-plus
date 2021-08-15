@@ -12,7 +12,14 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, provide, useSlots } from 'vue';
+import {
+  ref,
+  getCurrentInstance,
+  provide,
+  useSlots,
+  onMounted,
+  onUpdated
+} from 'vue';
 
 const props = defineProps({
   modelValue: { type: String, default: '' }
@@ -44,7 +51,6 @@ const getPaneInstanceFromSlot = (vnode, paneInstanceList) => {
     let type = node.type;
     type = type.name || type;
     if (type === 'SoTabPane' && node.component) {
-      
     }
   });
 };
@@ -80,4 +86,12 @@ const setPaneInstances = isForceUpdate => {
     panes.value = [];
   }
 };
+
+onUpdated(() => {
+  setPaneInstances();
+});
+
+onMounted(() => {
+  setPaneInstances();
+});
 </script>
