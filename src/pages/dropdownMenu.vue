@@ -1,6 +1,6 @@
 <template>
   <div class="page-dropdown-menu">
-    <h3 class="comp-title">下拉菜单</h3>
+    <h3 class="comp-title">下拉菜单 [待重构]</h3>
 
     <so-dropdown-menu ref="dropdownRef">
       <so-dropdown-item :title="state.itemTitle1">

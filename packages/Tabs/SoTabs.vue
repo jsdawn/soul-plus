@@ -24,18 +24,19 @@ import {
   provide,
   useSlots,
   onMounted,
-  onUpdated
+  onUpdated,
+  watch
 } from 'vue';
 
 const props = defineProps({
-  modelValue: { type: String, default: '' }
+  active: { type: String, default: '' }
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:active', 'click-tab', 'change']);
 
 const slots = useSlots();
 
-const currentName = ref(props.modelValue || '0');
+const currentName = ref(props.active || '0');
 const instance = getCurrentInstance();
 const panes = ref([]);
 const paneStateMap = {};
@@ -46,11 +47,6 @@ provide('rootTabs', { props, currentName });
 provide('updatePaneState', pane => {
   paneStateMap[pane.uid] = pane;
 });
-
-const changeCurrentName = value => {
-  currentName.value = value;
-  emit('update:modelValue', value);
-};
 
 // 递归获取 slot 中的 SoTabPane 组件实例
 const getPaneInstanceFromSlot = (vnode, instanceList) => {
@@ -101,15 +97,31 @@ const setPaneInstances = isForceUpdate => {
   }
 };
 
-const setCurrentName = value => {
-  if (currentName.value === value) return;
+const changeCurrentName = value => {
+  currentName.value = value;
+  emit('update:active', value);
+  emit('change', value);
 };
 
-const handleTabClick = (tab, tabName) => {
-  if (tab.props.disabled) return;
-  setCurrentName(tabName);
-  emit('click-tab', tab);
+const setCurrentName = value => {
+  if (currentName.value === value) return;
+  changeCurrentName(value);
 };
+
+const handleTabClick = (tab, name, event) => {
+  if (tab.props.disabled) return;
+
+  setCurrentName(name);
+  let { title, disabled } = tab.props;
+  emit('click-tab', { name, title, event, disabled });
+};
+
+watch(
+  () => props.active,
+  value => {
+    setCurrentName(value);
+  }
+);
 
 onUpdated(() => {
   setPaneInstances();
