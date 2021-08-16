@@ -1,5 +1,5 @@
 <template>
-  <transition name="so-fade">
+  <transition name="so-fade" appear>
     <div
       ref="overlayRef"
       :class="['so-overlay', className]"

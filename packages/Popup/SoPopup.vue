@@ -72,9 +72,11 @@ const emit = defineEmits([
   'closed'
 ]);
 
-const popupRef = ref();
-
 const attrs = useAttrs();
+
+const isOpened = ref(false); // popup是否处于打开状态
+
+const popupRef = ref();
 const initRender = useTruthy(() => props.show);
 
 const classes = computed(() => {
@@ -93,22 +95,26 @@ const transitionName = computed(() => {
 
 // 开启
 const open = () => {
+  if (isOpened.value) return;
+
+  isOpened.value = true;
   emit('open');
 };
 
 // 关闭
 const triggerClose = () => {
+  isOpened.value = false;
   emit('close');
   emit('update:show', false);
 };
 
 const close = () => {
-  if (props.show) {
-    callInterceptor({
-      interceptor: props.beforeClose,
-      done: triggerClose
-    });
-  }
+  if (!isOpened.value) return;
+
+  callInterceptor({
+    interceptor: props.beforeClose,
+    done: triggerClose
+  });
 };
 
 const clickOverlay = () => {
@@ -128,6 +134,10 @@ watch(
     value ? open() : close();
   }
 );
+
+watch(isOpened, val => {
+  console.log(val);
+});
 
 onMounted(() => {
   if (props.show) {
