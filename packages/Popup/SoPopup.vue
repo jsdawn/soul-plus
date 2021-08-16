@@ -135,10 +135,6 @@ watch(
   }
 );
 
-watch(isOpened, val => {
-  console.log(val);
-});
-
 onMounted(() => {
   if (props.show) {
     open();
