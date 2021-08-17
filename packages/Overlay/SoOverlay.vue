@@ -2,7 +2,7 @@
   <transition name="so-fade" appear>
     <div
       ref="overlayRef"
-      :class="['so-overlay', className]"
+      :class="['so-overlay', props.className]"
       v-if="initRender"
       v-show="props.show"
       :style="{ zIndex: props.zIndex }"

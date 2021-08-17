@@ -7,6 +7,7 @@ import SoToast from './Toast';
 import SoIcon from './Icon';
 import SoTabs from './Tabs';
 import SoTabPane from './TabPane';
+import SoDialog from './Dialog';
 
 const components = [
   SoDropdownMenu,
@@ -17,7 +18,8 @@ const components = [
   SoToast,
   SoIcon,
   SoTabs,
-  SoTabPane
+  SoTabPane,
+  SoDialog
 ];
 
 const install = app => {
@@ -39,7 +41,8 @@ export {
   SoToast,
   SoIcon,
   SoTabs,
-  SoTabPane
+  SoTabPane,
+  SoDialog
 };
 
 export default SoulPlus;

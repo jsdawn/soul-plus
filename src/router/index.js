@@ -32,6 +32,10 @@ const routes = [
   {
     path: '/tabs',
     component: () => import('../pages/tabs.vue')
+  },
+  {
+    path: '/dialog',
+    component: () => import('../pages/dialog.vue')
   }
 ];
 

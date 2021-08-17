@@ -1,6 +1,6 @@
 <template>
   <div class="page-popup">
-    <h3 class="comp-title">弹出层</h3>
+    <h3 class="comp-title">Popup 弹出层</h3>
     <div class="comp-wrap">
       <so-button type="primary" @click="show = !show">显示弹出层</so-button>
       <so-popup

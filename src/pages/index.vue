@@ -19,7 +19,8 @@ const baseComps = ref([
   { name: 'Popup 弹出层', path: '/popup' },
   { name: 'Toast 轻提示', path: '/toast' },
   { name: 'Icon 图标', path: '/icon' },
-  { name: 'Tabs 标签页', path: '/tabs' }
+  { name: 'Tabs 标签页', path: '/tabs' },
+  { name: 'Dialog 对话框', path: '/dialog' },
 ]);
 </script>
 

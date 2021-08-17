@@ -1,5 +1,7 @@
 @import './common/var.scss';
 
+$button-background-color: $gray-3;
+
 .so-button {
   position: relative;
   display: inline-flex;
@@ -35,7 +37,7 @@
 
   &:active {
     font-weight: $font-weight-bold;
-    background-color: $background-color;
+    background-color: $button-background-color;
   }
 
   &[disabled] {
@@ -95,7 +97,7 @@
     color: $text-color;
     background-color: transparent;
     &:active {
-      background-color: $background-color;
+      background-color: $button-background-color;
     }
 
     @mixin plain-styl($type-color) {

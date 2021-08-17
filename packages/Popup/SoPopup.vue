@@ -4,7 +4,7 @@
     :disabled="!props.teleport || props.disabledTeleport"
   >
     <so-overlay
-      :class-name="overlayClass"
+      :class-name="props.overlayClass"
       v-if="props.overlay"
       :show="props.show"
       :z-index="props.zIndex"
@@ -43,9 +43,9 @@ export default {
 <script setup>
 import { ref, useAttrs, computed, watch, onMounted } from 'vue';
 // utils
-import { popupSharedProps } from './shared';
 import { useTruthy, useLockScroll } from '../hooks';
 import { callInterceptor } from '../hooks/callInterceptor';
+import { popupSharedProps } from './shared';
 // components
 import SoOverlay from '../Overlay';
 
@@ -97,6 +97,8 @@ const open = () => {
 
 // 关闭
 const triggerClose = () => {
+  console.log('popup: triggerClose');
+
   isOpened.value = false;
   emit('close');
   emit('update:show', false);
@@ -104,6 +106,7 @@ const triggerClose = () => {
 
 const close = () => {
   if (!isOpened.value) return;
+  console.log('popup: close');
 
   callInterceptor({
     interceptor: props.beforeClose,

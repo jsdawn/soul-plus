@@ -1,6 +1,6 @@
 <template>
   <div class="page-overlay">
-    <h3 class="comp-title">遮罩层</h3>
+    <h3 class="comp-title">Overlay 遮罩层</h3>
     <div class="comp-wrap">
       <so-button type="primary" @click="show = !show">显示遮罩层</so-button>
 

@@ -2,10 +2,10 @@
   <button
     :class="['so-button', classes]"
     type="button"
-    :disabled="disabled || loading"
+    :disabled="props.disabled || props.loading"
     @click="handleClick"
   >
-    <span v-if="loading" class="so-button__indicator"></span>
+    <span v-if="props.loading" class="so-button__indicator"></span>
     <span class="so-button__text">
       <slot></slot>
     </span>

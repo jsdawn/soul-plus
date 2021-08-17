@@ -1,0 +1,60 @@
+@import './common/var.scss';
+@import './popup.scss';
+@import './button.scss';
+
+$dialog-border-color: $gray-4;
+
+.so-dialog {
+  top: 45%;
+  padding-top: 14px;
+  border-radius: $border-radius-lg;
+  width: 300px;
+
+  &__header {
+    padding: 6px 15px 15px;
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 1;
+    color: $text-color;
+    text-align: center;
+  }
+
+  &__content {
+    padding: 0 15px 15px;
+  }
+
+  &__message {
+    font-size: 15px;
+    line-height: 1.5;
+    color: $gray-7;
+    overflow: auto;
+    text-align: center;
+  }
+
+  &__footer {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    border-top: 1px solid $dialog-border-color;
+  }
+
+  &__confirm,
+  &__cancel {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  &__confirm {
+    color: $primary-color;
+  }
+
+  &__cancel + &__confirm {
+    margin-left: 0;
+    border-left: 1px solid $dialog-border-color;
+  }
+}

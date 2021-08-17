@@ -1,6 +1,6 @@
 <template>
   <div class="page-button">
-    <h3 class="comp-title">按钮</h3>
+    <h3 class="comp-title">Button 按钮</h3>
     <div class="comp-wrap">
       <so-button type="primary">按钮</so-button>
       <so-button type="success">按钮</so-button>
