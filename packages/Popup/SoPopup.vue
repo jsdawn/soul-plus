@@ -43,23 +43,17 @@ export default {
 <script setup>
 import { ref, useAttrs, computed, watch, onMounted } from 'vue';
 // utils
+import { popupSharedProps } from './shared';
 import { useTruthy, useLockScroll } from '../hooks';
 import { callInterceptor } from '../hooks/callInterceptor';
 // components
 import SoOverlay from '../Overlay';
 
 const props = defineProps({
-  show: Boolean, // v-model
-  overlay: { type: Boolean, default: true },
-  overlayClass: String,
-  closeOnClickOverlay: { type: Boolean, default: true },
-  teleport: { type: [String, Element], default: 'body' },
-  disabledTeleport: Boolean,
+  ...popupSharedProps,
+
   position: { type: String, default: 'center' }, // top bottom right left
-  transition: String,
-  zIndex: [Number, String],
-  lockScroll: { type: Boolean, default: true },
-  beforeClose: Function
+  transition: String
 });
 
 const emit = defineEmits([

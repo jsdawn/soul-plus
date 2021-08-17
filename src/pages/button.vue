@@ -13,9 +13,9 @@
 
     <h3 class="comp-title">朴素按钮</h3>
     <div class="comp-wrap">
-      <so-button type="primary" plain loading>按钮</so-button>
-      <so-button type="success" plain loading>按钮</so-button>
-      <so-button plain loading>按钮</so-button>
+      <so-button type="primary" plain>按钮</so-button>
+      <so-button type="success" plain>按钮</so-button>
+      <so-button plain>按钮</so-button>
     </div>
     <div class="comp-wrap">
       <so-button type="warning" plain>按钮</so-button>
@@ -31,7 +31,7 @@
     <h3 class="comp-title">加载状态</h3>
     <div class="comp-wrap">
       <so-button type="primary" loading>按钮</so-button>
-      <so-button type="success" loading>按钮</so-button>
+      <so-button type="success" plain loading>按钮</so-button>
     </div>
 
     <h3 class="comp-title">按钮尺寸</h3>
