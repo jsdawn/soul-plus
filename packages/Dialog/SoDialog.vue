@@ -1,5 +1,6 @@
 <template>
   <so-popup
+    ref="popupRef"
     role="dialog"
     :class="['so-dialog', props.className]"
     v-bind="popupProps"
@@ -45,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import { pick } from '../hooks';
 import { callInterceptor } from '../hooks/callInterceptor';
@@ -56,11 +57,13 @@ import SoButton from '../Button';
 
 const props = defineProps({
   ...popupSharedProps,
+  closeOnClickOverlay: { type: Boolean, default: false },
 
   title: String,
   width: String,
   message: [String, Element],
   className: String,
+  callback: Function,
   showConfirmButton: { type: Boolean, default: true },
   showCancelButton: { type: Boolean, default: true },
   confirmButtonText: { type: String, default: 'Ok' },
@@ -73,6 +76,7 @@ const loading = reactive({
   confirm: false,
   cancel: false
 });
+const popupRef = ref();
 
 const popupProps = computed(() => {
   return pick(props, popupSharedPropKeys);
@@ -81,7 +85,10 @@ const popupProps = computed(() => {
 const updateShow = value => emit('update:show', value);
 
 const close = action => {
-  updateShow(false);
+  popupRef.value?.triggerClose();
+  if (props.callback) {
+    props.callback(action);
+  }
 };
 
 const actionHandler = action => {

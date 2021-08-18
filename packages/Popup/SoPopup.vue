@@ -97,8 +97,6 @@ const open = () => {
 
 // 关闭
 const triggerClose = () => {
-  console.log('popup: triggerClose');
-
   isOpened.value = false;
   emit('close');
   emit('update:show', false);
@@ -106,7 +104,6 @@ const triggerClose = () => {
 
 const close = () => {
   if (!isOpened.value) return;
-  console.log('popup: close');
 
   callInterceptor({
     interceptor: props.beforeClose,
@@ -140,5 +137,5 @@ onMounted(() => {
 
 useLockScroll(popupRef, () => props.show && props.lockScroll);
 
-defineExpose({ popupRef });
+defineExpose({ triggerClose });
 </script>
