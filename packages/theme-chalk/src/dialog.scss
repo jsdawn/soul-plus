@@ -1,14 +1,17 @@
 @import './common/var.scss';
+@import './mixins/mixins.scss';
 @import './popup.scss';
 @import './button.scss';
 
 $dialog-border-color: $gray-4;
 
 .so-dialog {
-  top: 45%;
-  padding-top: 14px;
-  border-radius: $border-radius-lg;
-  width: 300px;
+  @include rp('.so-popup') {
+    top: 45%;
+    padding-top: 14px;
+    border-radius: $border-radius-lg;
+    width: 300px;
+  }
 
   &__header {
     padding: 6px 15px 15px;

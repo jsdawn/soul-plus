@@ -3,10 +3,11 @@ import ToastConstructor from './SoToast.vue';
 
 let instances = [];
 const defaultOpts = {
+  show: true,
   type: 'text',
   position: 'bottom', // middle bottom
   message: '',
-  duration: 2000, // 默认2秒关闭
+  duration: 0, // 默认2秒关闭
   transition: undefined,
   overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,
@@ -17,7 +18,7 @@ const defaultOpts = {
 
 const clear = () => {
   for (let instance of instances) {
-    instance.vm.component?.exposed.close();
+    instance.vm.component.props.show = false;
   }
   instances = [];
 };
@@ -46,10 +47,10 @@ const Toast = function (opts) {
   render(vm, container);
   instances.push({ vm });
 
-  document.body.appendChild(container.firstElementChild);
+  // document.body.appendChild(container.firstElementChild);
 
   return {
-    close: () => vm.component.exposed.close()
+    close: () => (vm.component.props.show = false)
   };
 };
 

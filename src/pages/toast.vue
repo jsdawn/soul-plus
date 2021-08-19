@@ -27,7 +27,7 @@ const showToast2 = () => {
 };
 
 const closeToast = () => {
-  tt.close();
+  tt?.close();
 };
 
 const closeToastAll = () => {

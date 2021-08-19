@@ -8,6 +8,7 @@
       v-if="props.overlay"
       :show="props.show"
       :z-index="props.zIndex"
+      :custom-style="props.overlayStyle"
       @click="clickOverlay"
     >
       <slot name="overlay"></slot>

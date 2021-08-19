@@ -4,13 +4,9 @@
       'so-toast': true,
       [`so-toast--${props.position}`]: props.position
     }"
-    v-model:show="show"
-    :disabled-teleport="true"
-    :overlay="props.overlay || props.forbidClick"
-    :overlay-class="overlayClasses"
-    :close-on-click-overlay="props.closeOnClickOverlay"
+    v-bind="popupProps"
     :transition="transitionName"
-    :lock-scroll="props.lockScroll"
+    @update:show="updateShow"
     @closed="onClosed"
   >
     <div
@@ -23,29 +19,35 @@
 </template>
 
 <script setup>
-import { computed, watch, onUnmounted, ref } from 'vue';
+import { computed, watch, onUnmounted } from 'vue';
+import { pick } from '../hooks';
+import { popupSharedProps, popupSharedPropKeys } from '../Popup/shared';
+
 import SoPopup from '../Popup';
 
 const props = defineProps({
+  ...popupSharedProps,
+  lockScroll: { type: Boolean, default: false },
+  overlay: { type: Boolean, default: false },
+
   type: { type: String, default: 'text' },
-  position: { type: String, default: 'bottom' }, // middle bottom
+  position: { type: String, default: 'bottom' }, // center bottom
   message: String,
   duration: { type: Number, default: 2000 }, // 0则不关闭
   transition: String,
-  overlay: { type: Boolean, default: false },
-  overlayClass: String,
-  forbidClick: Boolean, // 静止点击背景
-  closeOnClickOverlay: { type: Boolean, default: false },
-  lockScroll: { type: Boolean, default: false }
+  forbidClick: Boolean // 静止点击背景
 });
 
-const emit = defineEmits(['closed']);
+const emit = defineEmits(['update:show', 'closed']);
 
-const show = ref(true);
 let timer;
 
+const popupProps = computed(() => {
+  return pick(props, popupSharedPropKeys);
+});
+
 const overlayClasses = computed(() => {
-  let forbidClass = props.forbidClick ? 'so-toast--unclickable' : '';
+  let forbidClass = props.forbidClick ? 'so-overlay--transparent' : '';
   return props.overlayClass || forbidClass;
 });
 
@@ -53,6 +55,8 @@ const transitionName = computed(() => {
   let name = props.position === 'bottom' ? 'so-toast-slide-up' : 'so-fade';
   return props.transition || name;
 });
+
+const updateShow = value => emit('update:show', value);
 
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
@@ -63,13 +67,13 @@ const onClosed = () => {
   clearTimer();
 };
 
-const close = () => (show.value = false);
+const close = () => updateShow(false);
 
 watch(
-  () => [show, props.type, props.message, props.duration],
+  () => [props.show, props.type, props.message, props.duration],
   () => {
     clearTimer();
-    if (show && props.duration > 0) {
+    if (props.show && props.duration > 0) {
       timer = setTimeout(close, props.duration);
     }
   },

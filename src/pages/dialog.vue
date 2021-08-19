@@ -22,11 +22,11 @@ const show = ref(false);
 const show2 = ref(false);
 
 const onBeforeClose = action => {
-  console.log('onBeforeClose: ' + action);
   return new Promise(resolve => {
+    if (action !== 'confirm') return resolve(true);
     setTimeout(() => {
-      resolve(action === 'confirm');
-    }, 5000);
+      resolve(true);
+    }, 2000);
   });
 };
 </script>

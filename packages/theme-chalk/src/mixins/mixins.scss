@@ -1,3 +1,9 @@
+@mixin rp($selector) {
+  @at-root #{$selector + &} {
+    @content;
+  }
+}
+
 @mixin clearfix() {
   &::after {
     display: table;

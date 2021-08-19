@@ -2,10 +2,6 @@
 @import './mixins/mixins.scss';
 @import './overlay.scss';
 
-.so-overflow-hidden {
-  overflow: hidden !important;
-}
-
 .so-popup {
   position: fixed;
   z-index: $z-index-md;

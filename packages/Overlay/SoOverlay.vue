@@ -5,7 +5,7 @@
       :class="['so-overlay', props.className]"
       v-if="initRender"
       v-show="props.show"
-      :style="{ zIndex: props.zIndex }"
+      :style="{ zIndex: props.zIndex, ...customStyle }"
     >
       <slot></slot>
     </div>
@@ -20,6 +20,7 @@ const props = defineProps({
   show: Boolean,
   zIndex: [Number, String],
   className: String,
+  customStyle: Object,
   lockScroll: Boolean
 });
 
