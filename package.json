@@ -18,7 +18,7 @@
     "serve": "vite preview",
     "lib": "rm -rf es && rm -rf lib && rollup -c",
     "lib:theme": "cd packages/theme-chalk && yarn clean && yarn build",
-    "docker:build": "docker-build.sh"
+    "docker:build": "chmod +x ./docker-build.sh && ./docker-build.sh"
   },
   "repository": {
     "type": "git",
