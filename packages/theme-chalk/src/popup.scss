@@ -110,7 +110,7 @@
     }
     &-leave-active {
       animation: swing-top-out $animation-duration-base both
-        cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        cubic-bezier(0.43, 0.05, 0.72, 0.07);
     }
   }
 }

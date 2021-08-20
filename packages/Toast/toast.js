@@ -7,7 +7,7 @@ const defaultOpts = {
   type: 'text',
   position: 'bottom', // middle bottom
   message: '',
-  duration: 0, // 默认2秒关闭
+  duration: 2000, // 默认2秒关闭
   transition: undefined,
   overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,

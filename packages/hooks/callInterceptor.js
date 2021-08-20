@@ -5,8 +5,6 @@ export function callInterceptor({ interceptor, args, done, canceled } = {}) {
     // interceptorVal ? done : cancel
     const interceptorVal = interceptor.apply(null, args || []);
 
-    console.log(interceptorVal);
-
     if (isPromise(interceptorVal)) {
       interceptorVal
         .then(value => {
