@@ -1,3 +1,5 @@
+import { createApp } from 'vue';
+
 export const inBrowser = typeof window !== 'undefined';
 
 export function isFunction(val) {
@@ -20,4 +22,19 @@ export function pick(obj, keys, ignoreUndefined) {
     }
     return ret;
   }, {});
+}
+
+export function mountComponent(RootComponent) {
+  const app = createApp(RootComponent);
+  const root = document.createElement('div');
+
+  document.body.appendChild(root);
+
+  return {
+    instance: app.mount(root),
+    unmount() {
+      app.unmount();
+      document.body.removeChild(root);
+    }
+  };
 }

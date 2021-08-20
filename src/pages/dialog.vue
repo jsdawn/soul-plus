@@ -2,7 +2,7 @@
   <div class="page-overlay">
     <h3 class="comp-title">Dialog 对话框</h3>
     <div class="comp-wrap">
-      <so-button type="primary">显示对话框</so-button>
+      <so-button type="primary" @click="showDialog">显示对话框</so-button>
     </div>
 
     <h3 class="comp-title">组件调用</h3>
@@ -11,10 +11,10 @@
 
       <so-dialog
         v-model:show="show"
-        title="组件调用"
+        title="d"
+        message="Are you sure???"
         :beforeClose="onBeforeClose"
       >
-        <p style="text-align: center">Are you sure???</p>
       </so-dialog>
     </div>
   </div>
@@ -31,8 +31,16 @@ const onBeforeClose = action => {
   return new Promise(resolve => {
     if (action !== 'confirm') return resolve(true);
     setTimeout(() => {
-      resolve(false);
+      resolve(true);
     }, 2000);
+  });
+};
+
+const showDialog = () => {
+  SoDialog.alert({
+    title: 'Alert',
+    message: '显示对话框',
+    beforeClose: onBeforeClose
   });
 };
 </script>

@@ -97,18 +97,16 @@ const open = () => {
 };
 
 // 关闭
-const triggerClose = () => {
-  isOpened.value = false;
-  emit('close');
-  emit('update:show', false);
-};
-
 const close = () => {
   if (!isOpened.value) return;
 
   callInterceptor({
     interceptor: props.beforeClose,
-    done: triggerClose
+    done: () => {
+      isOpened.value = false;
+      emit('close');
+      emit('update:show', false);
+    }
   });
 };
 
@@ -126,7 +124,12 @@ const onClosed = () => emit('closed');
 watch(
   () => props.show,
   value => {
-    value ? open() : close();
+    if (value) {
+      open();
+    } else {
+      isOpened.value = false;
+      emit('close');
+    }
   }
 );
 
@@ -137,6 +140,4 @@ onMounted(() => {
 });
 
 useLockScroll(popupRef, () => props.show && props.lockScroll);
-
-defineExpose({ triggerClose });
 </script>

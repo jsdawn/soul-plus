@@ -8,16 +8,16 @@ $dialog-border-color: $gray-4;
 .so-dialog {
   @include rp('.so-popup') {
     top: 45%;
-    padding-top: 14px;
     border-radius: $border-radius-lg;
     width: 300px;
   }
 
   &__header {
-    padding: 6px 15px 15px;
+    position: relative;
   }
 
   &__title {
+    padding: 15px;
     font-size: 18px;
     line-height: 1;
     color: $text-color;
@@ -25,22 +25,32 @@ $dialog-border-color: $gray-4;
   }
 
   &__content {
-    padding: 0 15px 15px;
+    position: relative;
   }
 
   &__message {
+    padding: 30px 20px 20px;
     font-size: 15px;
     line-height: 1.5;
-    color: $gray-7;
     overflow: auto;
     text-align: center;
+
+    &--has-title {
+      padding-top: 0;
+      color: $gray-7;
+    }
   }
 
   &__footer {
+    position: relative;
+  }
+
+  &__btns {
     display: flex;
     overflow: hidden;
     user-select: none;
     border-top: 1px solid $dialog-border-color;
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
   }
 
   &__confirm,

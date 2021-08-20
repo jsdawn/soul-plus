@@ -1,6 +1,5 @@
 <template>
   <so-popup
-    ref="popupRef"
     role="dialog"
     :class="['so-dialog', props.className]"
     v-bind="popupProps"
@@ -9,37 +8,46 @@
   >
     <div class="so-dialog__header">
       <slot name="header">
-        <div class="so-dialog__title">{{ props.title }}</div>
+        <div class="so-dialog__title" v-if="props.title">{{ props.title }}</div>
       </slot>
     </div>
 
     <div class="so-dialog__content">
       <slot>
-        <div class="so-dialog__message">{{ props.message }}</div>
+        <div
+          :class="{
+            'so-dialog__message': true,
+            'so-dialog__message--has-title': props.title
+          }"
+        >
+          {{ props.message }}
+        </div>
       </slot>
     </div>
 
     <div class="so-dialog__footer">
       <slot name="footer">
-        <so-button
-          v-if="props.showCancelButton"
-          class="so-dialog__cancel"
-          size="large"
-          :loading="loading.cancel"
-          @click="onCancel"
-        >
-          {{ props.cancelButtonText }}
-        </so-button>
+        <div class="so-dialog__btns">
+          <so-button
+            v-if="props.showCancelButton"
+            class="so-dialog__cancel"
+            size="large"
+            :loading="loading.cancel"
+            @click="onCancel"
+          >
+            {{ props.cancelButtonText }}
+          </so-button>
 
-        <so-button
-          v-if="props.showConfirmButton"
-          class="so-dialog__confirm"
-          size="large"
-          :loading="loading.confirm"
-          @click="onConfirm"
-        >
-          {{ props.confirmButtonText }}
-        </so-button>
+          <so-button
+            v-if="props.showConfirmButton"
+            class="so-dialog__confirm"
+            size="large"
+            :loading="loading.confirm"
+            @click="onConfirm"
+          >
+            {{ props.confirmButtonText }}
+          </so-button>
+        </div>
       </slot>
     </div>
   </so-popup>
@@ -76,7 +84,6 @@ const loading = reactive({
   confirm: false,
   cancel: false
 });
-const popupRef = ref();
 
 const popupProps = computed(() => {
   return pick(props, popupSharedPropKeys);
@@ -85,7 +92,8 @@ const popupProps = computed(() => {
 const updateShow = value => emit('update:show', value);
 
 const close = action => {
-  popupRef.value?.triggerClose();
+  updateShow(false);
+
   if (props.callback) {
     props.callback(action);
   }

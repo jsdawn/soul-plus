@@ -1,5 +1,6 @@
 <template>
   <so-popup
+    role="toast"
     :class="{
       'so-toast': true,
       [`so-toast--${props.position}`]: props.position

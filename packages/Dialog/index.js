@@ -1,6 +1,3 @@
-import SoDialog from './SoDialog.vue';
+import SoDialog from './dialog';
 
-SoDialog.install = function (app) {
-  app.component('SoDialog', SoDialog);
-};
 export default SoDialog;

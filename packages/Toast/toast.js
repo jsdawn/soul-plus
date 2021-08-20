@@ -56,4 +56,9 @@ const Toast = function (opts) {
 
 Toast.clear = clear;
 
+Toast.install = app => {
+  app.component('SoIcon', ToastConstructor);
+  app.config.globalProperties.$toast = Toast;
+};
+
 export default Toast;
