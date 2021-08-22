@@ -1,5 +1,5 @@
-import { h, reactive, nextTick, getCurrentInstance } from 'vue';
-import { mountComponent } from '../hooks';
+import { h, reactive, nextTick } from 'vue';
+import { mountComponent, useInstanceExpose } from '../hooks';
 
 import SoDialog from './SoDialog.vue';
 
@@ -12,19 +12,21 @@ const initInstance = () => {
         show: false
       });
 
+      const updateShow = value => (state.show = value);
+
       const open = options => {
         Object.assign(state, options);
-        nextTick(() => (state.show = true));
+        nextTick(() => {
+          updateShow(true);
+        });
       };
 
-      const instance = getCurrentInstance();
-
-      instance.proxy.open = open;
+      useInstanceExpose({ open });
 
       return () =>
         h(SoDialog, {
           ...state,
-          'onUpdate:show': value => (state.show = value)
+          'onUpdate:show': updateShow
         });
     }
   };

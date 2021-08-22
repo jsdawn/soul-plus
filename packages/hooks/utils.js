@@ -38,3 +38,12 @@ export function mountComponent(RootComponent) {
     }
   };
 }
+
+// 将 htmlCollection append to parentElement
+export function appendElements(htmlCollection, parentElement) {
+  Array.from(htmlCollection).forEach(child => {
+    if (child.nodeType === 1) {
+      (parentElement || document.body).appendChild(child);
+    }
+  });
+}

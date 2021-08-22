@@ -1,4 +1,5 @@
 import { h, render } from 'vue';
+import { appendElements } from '../hooks';
 import ToastConstructor from './SoToast.vue';
 
 let instances = [];
@@ -11,6 +12,7 @@ const defaultOpts = {
   transition: undefined,
   overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,
+  disabledTeleport: true, // 禁用 Teleport
   forbidClick: false, // 静止点击背景
   closeOnClickOverlay: false,
   lockScroll: false
@@ -18,7 +20,7 @@ const defaultOpts = {
 
 const clear = () => {
   for (let instance of instances) {
-    instance.vm.component.props.show = false;
+    instance.vm.component.exposed.close();
   }
   instances = [];
 };
@@ -36,7 +38,16 @@ const Toast = function (opts) {
   container.className = 'container_toast';
 
   // createVNode 方法创建一个 vNode 独享
-  const vm = h(ToastConstructor, options);
+  const vm = h(ToastConstructor, {
+    ...options,
+    'onUpdate:show': value => {
+      vm.component.props.show = value;
+    }
+  });
+
+  // vm.props['onUpdate:show'] = value => {
+  //   vm.component.props.show = value;
+  // };
 
   // clean element preventing mem leak
   vm.props.onClosed = () => {
@@ -47,10 +58,10 @@ const Toast = function (opts) {
   render(vm, container);
   instances.push({ vm });
 
-  // document.body.appendChild(container.firstElementChild);
+  appendElements(container.children);
 
   return {
-    close: () => (vm.component.props.show = false)
+    close: () => vm.component.exposed.close()
   };
 };
 
