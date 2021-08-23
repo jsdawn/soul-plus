@@ -10,6 +10,10 @@ const routes = [
     component: () => import('../pages/button.vue')
   },
   {
+    path: '/cell',
+    component: () => import('../pages/cell.vue')
+  },
+  {
     path: '/dropdown-menu',
     component: () => import('../pages/dropdownMenu.vue')
   },
@@ -36,6 +40,10 @@ const routes = [
   {
     path: '/dialog',
     component: () => import('../pages/dialog.vue')
+  },
+  {
+    path: '/field',
+    component: () => import('../pages/field.vue')
   }
 ];
 

@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive } from 'vue';
 
 import { pick } from '../hooks';
 import { callInterceptor } from '../hooks/callInterceptor';

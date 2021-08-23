@@ -23,17 +23,32 @@ const initInstance = () => {
 
       useInstanceExpose({ open });
 
-      return () =>
-        h(SoDialog, {
-          ...state,
-          'onUpdate:show': updateShow
-        });
+      return () => h(SoDialog, { ...state, 'onUpdate:show': updateShow });
     }
   };
 
   const { instance } = mountComponent(wrapper);
 
   dialogInstance = instance;
+};
+
+const defaultOptions = {
+  title: '',
+  width: undefined,
+  message: '',
+  className: '',
+  showConfirmButton: true,
+  showCancelButton: true,
+  confirmButtonText: 'Ok',
+  cancelButtonText: 'Cancel',
+
+  lockScroll: true,
+  beforeClose: undefined,
+  teleport: 'body',
+  overlay: true,
+  overlayClass: undefined,
+  overlayStyle: undefined,
+  closeOnClickOverlay: false
 };
 
 const dialog = options => {
@@ -43,6 +58,7 @@ const dialog = options => {
     }
 
     dialogInstance.open({
+      ...defaultOptions,
       ...options,
       callback: action => {
         action === 'confirm' ? resolve(action) : reject(action);

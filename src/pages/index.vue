@@ -6,6 +6,13 @@
         <span>{{ item.name }}</span> <i>&gt;</i>
       </router-link>
     </div>
+
+    <h3 class="comp-title">表单组件</h3>
+    <div class="components">
+      <router-link v-for="item in formComps" :key="item.name" :to="item.path">
+        <span>{{ item.name }}</span> <i>&gt;</i>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -14,14 +21,17 @@ import { ref } from 'vue';
 
 const baseComps = ref([
   { name: 'Button 按钮', path: '/button' },
-  { name: 'DropdownMenu 下拉菜单', path: '/dropdown-menu' },
+  { name: 'Cell 单元格', path: '/cell' },
   { name: 'Overlay 遮罩层', path: '/overlay' },
   { name: 'Popup 弹出层', path: '/popup' },
   { name: 'Toast 轻提示', path: '/toast' },
   { name: 'Icon 图标', path: '/icon' },
   { name: 'Tabs 标签页', path: '/tabs' },
   { name: 'Dialog 对话框', path: '/dialog' },
+  { name: 'DropdownMenu 下拉菜单', path: '/dropdown-menu' }
 ]);
+
+const formComps = ref([{ name: 'Field 输入框', path: '/field' }]);
 </script>
 
 <style lang="scss" scoped>
