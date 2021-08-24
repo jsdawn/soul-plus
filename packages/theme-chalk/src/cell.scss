@@ -12,7 +12,8 @@ $cell-padding: 15px;
   padding: 10px $cell-padding;
   color: $text-color;
   font-size: $font-size-md;
-  line-height: 1.5;
+  line-height: 24px;
+  word-wrap: break-word;
 
   & + & {
     &::before {
@@ -48,6 +49,7 @@ $cell-padding: 15px;
     margin-top: 5px;
     color: $text-secondary-color;
     font-size: $font-size-sm;
+    line-height: 1.5;
   }
 
   &__value {

@@ -21,7 +21,7 @@
       <so-cell>
         <template #title>标题</template>
         <template #label>描述信息</template>
-        内容
+        <span>内容</span>
       </so-cell>
     </div>
   </div>

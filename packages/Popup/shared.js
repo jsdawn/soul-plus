@@ -13,7 +13,7 @@ export const popupSharedProps = {
 
   overlay: { type: Boolean, default: true },
 
-  overlayClass: String,
+  overlayClass: [String, Array, Object],
 
   overlayStyle: Object,
 

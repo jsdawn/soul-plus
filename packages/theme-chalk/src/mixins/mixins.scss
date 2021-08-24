@@ -1,5 +1,13 @@
+// root peer
 @mixin rp($selector) {
   @at-root #{$selector + &} {
+    @content;
+  }
+}
+
+// sub class
+@mixin b($name) {
+  & #{& + $name} {
     @content;
   }
 }

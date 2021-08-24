@@ -29,7 +29,7 @@ import {
 const props = defineProps({
   title: String,
   disabled: Boolean,
-  titleClass: String
+  titleClass: [String, Array, Object]
 });
 
 const paneRef = ref();
