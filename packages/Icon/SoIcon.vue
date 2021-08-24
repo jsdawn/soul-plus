@@ -1,9 +1,6 @@
 <template>
   <i
-    :class="{
-      'so-icon': true,
-      [`so-icon-${props.name}`]: props.name
-    }"
+    :class="[classPreName, `${classPreName}-${props.name}`]"
     :style="{
       color: props.color,
       fontSize: props.size
@@ -12,9 +9,14 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   name: String,
   color: String,
-  size: String
+  size: String,
+  classPrefix: String
 });
+
+const classPreName = computed(() => props.classPrefix || 'so-icon');
 </script>

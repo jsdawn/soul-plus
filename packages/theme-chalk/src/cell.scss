@@ -1,13 +1,44 @@
 @import './common/var.scss';
+@import './icon.scss';
+
+$cell-padding: 15px;
 
 .so-cell {
+  position: relative;
   display: flex;
+  align-items: flex-start;
   box-sizing: border-box;
   width: 100%;
-  padding: 10px 15px;
+  padding: 10px $cell-padding;
   color: $text-color;
   font-size: $font-size-md;
   line-height: 1.5;
+
+  & + & {
+    &::before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: $cell-padding;
+      right: $cell-padding;
+      border-top: 1px solid $border-color;
+    }
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--clickable {
+    cursor: pointer;
+    &:active {
+      background-color: $active-color;
+    }
+  }
+
+  &__left-icon {
+    margin-right: 5px;
+  }
 
   &__title {
     flex: 1;
@@ -25,5 +56,10 @@
     color: $text-secondary-color;
     text-align: right;
     word-wrap: break-word;
+  }
+
+  &__right-icon {
+    margin-left: 5px;
+    color: $text-secondary-color;
   }
 }
