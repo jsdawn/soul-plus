@@ -6,24 +6,29 @@
         label="用户名"
         v-model="info.username"
         placeholder="请输入用户名"
-        left-icon="user-circle-o"
-        right-icon="arrow"
-        label-width="100px"
-      >
-        <template #label>颠三倒四</template>
-      </so-field>
+      ></so-field>
+    </div>
 
-      <so-field></so-field>
+    <h3 class="comp-title">自定义类型</h3>
+    <div class="comp-wrap">
+      <so-field label="文本" aa v-model="info.text" type="text"></so-field>
+      <so-field label="数字" v-model="info.num" type="number"></so-field>
+      <so-field label="密码" v-model="info.pwd" type="password"></so-field>
     </div>
   </div>
 </template>
+
+
 
 <script setup>
 import { reactive } from 'vue';
 import { SoField } from 'packages/index.js';
 
 const info = reactive({
-  username: ''
+  username: '',
+  text: '',
+  num: '',
+  pwd: ''
 });
 </script>
 
