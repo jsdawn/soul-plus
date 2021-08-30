@@ -47,3 +47,10 @@ export function appendElements(htmlCollection, parentElement) {
     }
   });
 }
+
+// trigger dom event
+export function trigger(target, type) {
+  const inputEvent = document.createEvent('HTMLEvents');
+  inputEvent.initEvent(type, true, true);
+  target.dispatchEvent(inputEvent);
+}

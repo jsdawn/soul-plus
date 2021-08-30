@@ -3,6 +3,8 @@
 @import './icon.scss';
 
 $field-padding: 15px;
+$icon-padding: 8px;
+$icon-clear-color: $gray-5;
 
 .so-field {
   position: relative;
@@ -38,13 +40,28 @@ $field-padding: 15px;
     }
   }
 
-  &__left-icon {
-    margin-right: 5px;
+  &__clear,
+  &__left-icon,
+  &__right-icon {
+    flex-shrink: 0;
+    line-height: inherit;
   }
 
+  &__left-icon {
+    margin-right: $icon-padding;
+  }
+
+  &__clear,
   &__right-icon {
-    margin-left: 5px;
+    margin-right: -1 * $icon-padding;
+    padding: 0 $icon-padding;
+    line-height: inherit;
     color: $text-secondary-color;
+  }
+
+  &__clear {
+    color: $icon-clear-color;
+    cursor: pointer;
   }
 
   &__label {

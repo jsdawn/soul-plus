@@ -8,13 +8,13 @@
     @click="onClick"
   >
     <slot name="left-icon">
-      <SoIcon
-        class="so-field__left-icon"
-        v-if="props.leftIcon"
-        :classPrefix="props.iconPrefix"
-        :name="props.leftIcon"
-        :size="props.iconSize || '16px'"
-      />
+      <div class="so-field__left-icon" v-if="props.leftIcon">
+        <SoIcon
+          :classPrefix="props.iconPrefix"
+          :name="props.leftIcon"
+          :size="props.iconSize"
+        />
+      </div>
     </slot>
 
     <div
@@ -35,24 +35,23 @@
           :type="props.type || 'text'"
         />
 
-        <SoIcon
-          class="so-field__clear"
-          v-if="showClear"
-          name="clear"
-          :size="props.iconSize || '16px'"
-        />
+        <div class="so-field__clear" v-if="initRenderClear" @click="onClear">
+          <SoIcon name="clear" :size="props.iconSize" />
+        </div>
+
+        <slot name="right-icon">
+          <div class="so-field__right-icon" v-if="props.rightIcon">
+            <SoIcon
+              :classPrefix="props.iconPrefix"
+              :name="props.rightIcon"
+              :size="props.iconSize"
+            />
+          </div>
+        </slot>
       </slot>
     </div>
 
-    <slot name="right-icon">
-      <SoIcon
-        class="so-field__right-icon"
-        v-if="props.rightIcon"
-        :classPrefix="props.iconPrefix"
-        :name="props.rightIcon"
-        :size="props.iconSize || '16px'"
-      />
-    </slot>
+    <slot name="extra"></slot>
   </div>
 </template>
 
@@ -64,6 +63,8 @@ export default {
 
 <script setup>
 import { ref, useAttrs, computed, reactive } from 'vue';
+import { trigger, useTruthy } from '../hooks';
+
 import SoIcon from '../Icon';
 
 const props = defineProps({
@@ -92,7 +93,7 @@ const props = defineProps({
   labelAlign: String, // left center right
 
   iconPrefix: String,
-  iconSize: String,
+  iconSize: { type: String, default: '16px' },
   leftIcon: String,
   rightIcon: String
 });
@@ -107,6 +108,8 @@ const emit = defineEmits([
 ]);
 
 const attrs = useAttrs();
+
+const initRenderClear = useTruthy(() => props.clearable);
 
 const inputRef = ref();
 
@@ -133,8 +136,17 @@ const updateValue = value => {
   }
 };
 
+const onClick = event => emit('click', event);
+
+const onClear = event => {
+  event.preventDefault();
+  updateValue('');
+  emit('clear', event);
+};
+
 const onBlur = event => {
   state.focused = false;
+  updateValue(getModelValue());
   emit('blur', event);
 };
 
@@ -147,6 +159,8 @@ const onInput = event => {
   if (!event.target?.composing) {
     updateValue(event.target?.value);
   }
+
+  console.log(props.modelValue);
 };
 
 const onClickInput = event => emit('click-input', event);
@@ -154,12 +168,14 @@ const onClickInput = event => emit('click-input', event);
 const onKeypress = event => emit('keypress', event);
 
 const startComposing = event => {
+  console.log('startComposing');
   if (event.target) event.target.composing = true;
 };
 
 const endComposing = event => {
   if (event.target?.composing) {
     event.target.composing = false;
+    trigger(event.target, 'input');
   }
 };
 
@@ -186,6 +202,4 @@ const inputAttrs = computed(() => {
     onCompositionend: endComposing
   };
 });
-
-const onClick = event => emit('click', event);
 </script>
