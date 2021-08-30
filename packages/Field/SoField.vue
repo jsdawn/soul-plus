@@ -34,6 +34,13 @@
           v-bind="inputAttrs"
           :type="props.type || 'text'"
         />
+
+        <SoIcon
+          class="so-field__clear"
+          v-if="showClear"
+          name="clear"
+          :size="props.iconSize || '16px'"
+        />
       </slot>
     </div>
 
@@ -56,7 +63,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, useAttrs, computed } from 'vue';
+import { ref, useAttrs, computed, reactive } from 'vue';
 import SoIcon from '../Icon';
 
 const props = defineProps({
@@ -90,11 +97,35 @@ const props = defineProps({
   rightIcon: String
 });
 
-const emit = defineEmits(['update:modelValue', 'blur', 'focus']);
+const emit = defineEmits([
+  'update:modelValue',
+  'click',
+  'blur',
+  'focus',
+  'keypress',
+  'click-input'
+]);
 
 const attrs = useAttrs();
 
 const inputRef = ref();
+
+const state = reactive({
+  focused: false,
+  validateFailed: false,
+  validateMessage: ''
+});
+
+const getModelValue = () => String(props.modelValue ?? '');
+
+const showClear = computed(() => {
+  return (
+    props.clearable &&
+    !props.readonly &&
+    state.focused &&
+    getModelValue() !== ''
+  );
+});
 
 const updateValue = value => {
   if (value !== props.modelValue) {
@@ -103,24 +134,34 @@ const updateValue = value => {
 };
 
 const onBlur = event => {
+  state.focused = false;
   emit('blur', event);
 };
 
 const onFocus = event => {
+  state.focused = true;
   emit('focus', event);
 };
 
 const onInput = event => {
-  updateValue(event.target?.value);
+  if (!event.target?.composing) {
+    updateValue(event.target?.value);
+  }
 };
 
-const onClickInput = event => {};
+const onClickInput = event => emit('click-input', event);
 
-const onKeypress = event => {};
+const onKeypress = event => emit('keypress', event);
 
-const startComposing = event => {};
+const startComposing = event => {
+  if (event.target) event.target.composing = true;
+};
 
-const endComposing = event => {};
+const endComposing = event => {
+  if (event.target?.composing) {
+    event.target.composing = false;
+  }
+};
 
 const inputAttrs = computed(() => {
   return {
@@ -141,8 +182,8 @@ const inputAttrs = computed(() => {
     onClick: onClickInput,
     onChange: endComposing,
     onKeypress,
-    onCompositionend: endComposing,
-    onCompositionstart: startComposing
+    onCompositionstart: startComposing,
+    onCompositionend: endComposing
   };
 });
 

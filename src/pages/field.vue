@@ -11,14 +11,12 @@
 
     <h3 class="comp-title">自定义类型</h3>
     <div class="comp-wrap">
-      <so-field label="文本" aa v-model="info.text" type="text"></so-field>
+      <so-field label="文本" aa v-model="info.text" type="text" clearable></so-field>
       <so-field label="数字" v-model="info.num" type="number"></so-field>
       <so-field label="密码" v-model="info.pwd" type="password"></so-field>
     </div>
   </div>
 </template>
-
-
 
 <script setup>
 import { reactive } from 'vue';
