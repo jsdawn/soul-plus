@@ -3,6 +3,7 @@
 @import './icon.scss';
 
 $field-padding: 15px;
+$field-disabled-color: $gray-5;
 $icon-padding: 8px;
 $icon-clear-color: $gray-5;
 
@@ -45,6 +46,9 @@ $icon-clear-color: $gray-5;
   &__right-icon {
     flex-shrink: 0;
     line-height: inherit;
+    i {
+      display: block;
+    }
   }
 
   &__left-icon {
@@ -91,5 +95,17 @@ $icon-clear-color: $gray-5;
     background-color: transparent;
     border: 0;
     resize: none;
+
+    &:read-only {
+      cursor: default;
+    }
+
+    &:disabled {
+      color: $field-disabled-color;
+    }
+
+    &::placeholder {
+      color: $field-disabled-color;
+    }
   }
 }

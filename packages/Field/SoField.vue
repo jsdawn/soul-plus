@@ -19,6 +19,7 @@
 
     <div
       class="so-field__label"
+      v-if="props.label || slots.label"
       :class="props.labelClass"
       :style="{ width: props.labelWidth, textAlign: props.labelAlign }"
     >
@@ -35,7 +36,13 @@
           :type="props.type || 'text'"
         />
 
-        <div class="so-field__clear" v-if="initRenderClear" @click="onClear">
+        <div
+          class="so-field__clear"
+          v-if="initRenderClear"
+          v-show="showClear"
+          @touchstart="onClear"
+          @mousedown="onClear"
+        >
           <SoIcon name="clear" :size="props.iconSize" />
         </div>
 
@@ -62,7 +69,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, useAttrs, computed, reactive } from 'vue';
+import { ref, useAttrs, computed, reactive, useSlots } from 'vue';
 import { trigger, useTruthy } from '../hooks';
 
 import SoIcon from '../Icon';
@@ -104,10 +111,13 @@ const emit = defineEmits([
   'blur',
   'focus',
   'keypress',
+  'clear',
   'click-input'
 ]);
 
 const attrs = useAttrs();
+
+const slots = useSlots();
 
 const initRenderClear = useTruthy(() => props.clearable);
 
@@ -140,7 +150,7 @@ const onClick = event => emit('click', event);
 
 const onClear = event => {
   event.preventDefault();
-  updateValue('');
+  emit('update:modelValue', '');
   emit('clear', event);
 };
 
@@ -159,8 +169,6 @@ const onInput = event => {
   if (!event.target?.composing) {
     updateValue(event.target?.value);
   }
-
-  console.log(props.modelValue);
 };
 
 const onClickInput = event => emit('click-input', event);
@@ -168,7 +176,6 @@ const onClickInput = event => emit('click-input', event);
 const onKeypress = event => emit('keypress', event);
 
 const startComposing = event => {
-  console.log('startComposing');
   if (event.target) event.target.composing = true;
 };
 
