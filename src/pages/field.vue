@@ -11,9 +11,25 @@
 
     <h3 class="comp-title">自定义类型</h3>
     <div class="comp-wrap">
-      <so-field label="文本" v-model="info.text"></so-field>
-      <so-field label="数字" v-model.number="info.num" type="number"></so-field>
-      <so-field label="密码" v-model="info.pwd" type="password"></so-field>
+      <so-field
+        label="文本"
+        v-model="info.text"
+        placeholder="请输入文本"
+      ></so-field>
+
+      <so-field
+        label="数字"
+        v-model.number="info.num"
+        type="number"
+        placeholder="请输入数字"
+      ></so-field>
+
+      <so-field
+        label="密码"
+        v-model="info.pwd"
+        type="password"
+        placeholder="请输入密码"
+      ></so-field>
     </div>
 
     <h3 class="comp-title">禁用输入框</h3>
@@ -49,9 +65,12 @@ import { SoField } from 'packages/index.js';
 
 const info = reactive({
   username: '',
+
   text: '',
   num: '',
   pwd: '',
+
+  icon1: '',
   icon2: ''
 });
 </script>

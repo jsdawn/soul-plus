@@ -6,4 +6,3 @@ lib
 es
 *.local
 .idea
-docker-build.sh
