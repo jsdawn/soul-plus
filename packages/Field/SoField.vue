@@ -20,7 +20,10 @@
     <div
       class="so-field__label"
       v-if="props.label || slots.label"
-      :class="props.labelClass"
+      :class="[
+        { 'so-field__label--required': props.required },
+        props.labelClass
+      ]"
       :style="{ width: props.labelWidth, textAlign: props.labelAlign }"
     >
       <slot name="label">
@@ -28,34 +31,43 @@
       </slot>
     </div>
 
-    <div class="so-field__body">
-      <slot>
-        <input
-          class="so-field__control"
-          v-bind="inputAttrs"
-          :type="props.type || 'text'"
-        />
+    <div class="so-field__value">
+      <div class="so-field__body">
+        <slot>
+          <input
+            class="so-field__control"
+            v-bind="inputAttrs"
+            :type="props.type || 'text'"
+          />
 
-        <div
-          class="so-field__clear"
-          v-if="initRenderClear"
-          v-show="showClear"
-          @touchstart="onClear"
-          @mousedown="onClear"
-        >
-          <SoIcon name="clear" :size="props.iconSize" />
-        </div>
-
-        <slot name="right-icon">
-          <div class="so-field__right-icon" v-if="props.rightIcon">
-            <SoIcon
-              :classPrefix="props.iconPrefix"
-              :name="props.rightIcon"
-              :size="props.iconSize"
-            />
+          <div
+            class="so-field__clear"
+            v-if="initRenderClear"
+            v-show="showClear"
+            @touchstart="onClear"
+            @mousedown="onClear"
+          >
+            <SoIcon name="clear" :size="props.iconSize" />
           </div>
+
+          <slot name="right-icon">
+            <div class="so-field__right-icon" v-if="props.rightIcon">
+              <SoIcon
+                :classPrefix="props.iconPrefix"
+                :name="props.rightIcon"
+                :size="props.iconSize"
+              />
+            </div>
+          </slot>
         </slot>
-      </slot>
+      </div>
+
+      <div
+        class="so-field__error-message"
+        v-if="state.validateMessage || props.errorMessage"
+      >
+        {{ state.validateMessage || props.errorMessage }}
+      </div>
     </div>
 
     <slot name="extra"></slot>
@@ -69,7 +81,15 @@ export default {
 </script>
 
 <script setup>
-import { ref, useAttrs, computed, reactive, useSlots } from 'vue';
+import {
+  ref,
+  useAttrs,
+  computed,
+  reactive,
+  useSlots,
+  watch,
+  onMounted
+} from 'vue';
 import { trigger, useTruthy } from '../hooks';
 
 import SoIcon from '../Icon';
@@ -93,7 +113,7 @@ const props = defineProps({
   formatter: Function,
   center: Boolean,
   clickable: Boolean,
-  rules: Array,
+  rules: [Array, Object],
 
   labelClass: [String, Array, Object],
   labelWidth: String,
@@ -146,6 +166,62 @@ const updateValue = value => {
   }
 };
 
+// -s validate rules -
+
+const resetValidation = () => {
+  if (!state.validateFailed) return;
+  state.validateFailed = false;
+  state.validateMessage = '';
+};
+
+const validate = rules => {
+  resetValidation();
+  if (!rules || !rules.length) return;
+
+  for (let rule of rules) {
+    // required
+    if (rule.required && getModelValue() == '') {
+      state.validateFailed = true;
+      state.validateMessage = rule.message || '';
+      return;
+    }
+
+    // validator
+    if (rule.validator) {
+      let result = rule.validator(props.modelValue, rule);
+      let isResStr = typeof result === 'string';
+      if (isResStr || result === false) {
+        state.validateFailed = true;
+        state.validateMessage = (isResStr ? result : rule.message) || '';
+        return;
+      }
+    }
+    // pattern
+    else if (rule.pattern) {
+      let reg = new RegExp(rule.pattern);
+      if (reg && !reg.test(props.modelValue)) {
+        state.validateFailed = true;
+        state.validateMessage = rule.message || '';
+        return;
+      }
+    }
+  }
+};
+
+const validateWithTrigger = trigger => {
+  if (!props.rules) return;
+
+  let validRules = []
+    .concat(props.rules)
+    .filter(rule => trigger === (rule.trigger || 'blur'));
+
+  if (validRules.length) validate(validRules);
+};
+
+// -end validate rules -
+
+// -s input events -
+
 const onClick = event => emit('click', event);
 
 const onClear = event => {
@@ -158,6 +234,7 @@ const onBlur = event => {
   state.focused = false;
   updateValue(getModelValue());
   emit('blur', event);
+  validateWithTrigger('blur');
 };
 
 const onFocus = event => {
@@ -208,5 +285,20 @@ const inputAttrs = computed(() => {
     onCompositionstart: startComposing,
     onCompositionend: endComposing
   };
+});
+
+// -end input events -
+
+watch(
+  () => props.modelValue,
+  () => {
+    updateValue(getModelValue());
+    resetValidation();
+    validateWithTrigger('change');
+  }
+);
+
+onMounted(() => {
+  updateValue(getModelValue());
 });
 </script>

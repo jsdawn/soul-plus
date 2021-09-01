@@ -6,7 +6,6 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import vue from 'rollup-plugin-vue';
 import scss from 'rollup-plugin-scss';
 import commonjs from 'rollup-plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
 
 // not comps files
 const NOT_COMPS = ['index.js', 'style', 'hooks', 'theme-chalk'];
@@ -57,8 +56,7 @@ export default inputs.map(item => ({
     }),
     commonjs(),
     nodeResolve(),
-    esbuild(),
-    terser()
+    esbuild()
   ],
   external: ['vue']
 }));

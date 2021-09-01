@@ -6,6 +6,7 @@ $field-padding: 15px;
 $field-disabled-color: $gray-5;
 $icon-padding: 8px;
 $icon-clear-color: $gray-5;
+$error-color: $red;
 
 .so-field {
   position: relative;
@@ -71,16 +72,33 @@ $icon-clear-color: $gray-5;
   &__label {
     flex: none;
     width: 6em;
+
+    &--required:before {
+      margin-right: 2px;
+      color: $error-color;
+      content: '*';
+    }
   }
 
-  &__body {
+  &__value {
     position: relative;
     flex: 1;
-    display: flex;
-    align-items: center;
     color: $text-secondary-color;
     text-align: right;
     word-wrap: break-word;
+  }
+
+  &__error-message {
+    margin-top: 5px;
+    color: $error-color;
+    text-align: left;
+    font-size: $font-size-sm;
+    line-height: 1.5;
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
   }
 
   &__control {

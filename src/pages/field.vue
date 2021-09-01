@@ -56,6 +56,33 @@
         placeholder="显示清除图标"
       ></so-field>
     </div>
+
+    <h3 class="comp-title">错误信息</h3>
+    <div class="comp-wrap">
+      <so-field
+        label="文本"
+        v-model="info.err1"
+        required
+        placeholder="请输入文字"
+        error-message="直接传入错误信息"
+      ></so-field>
+
+      <so-field
+        label="手机号"
+        required
+        v-model="info.err2"
+        placeholder="验证手机号"
+        :rules="info.rules2"
+      ></so-field>
+
+      <so-field
+        label="数字"
+        required
+        v-model="info.err3"
+        placeholder="请输入 666"
+        :rules="info.rules3"
+      ></so-field>
+    </div>
   </div>
 </template>
 
@@ -71,7 +98,20 @@ const info = reactive({
   pwd: '',
 
   icon1: '',
-  icon2: ''
+  icon2: '',
+
+  err2: '',
+
+  rules1: [
+    { required: true, message: '手机号不能为空' },
+    { pattern: /^1[0-9]{10}$/, message: '手机号格式错误', trigger: 'blur' }
+  ],
+  rules3: {
+    validator: value => {
+      return String(value) === '666';
+    },
+    message: '请输入 666 字面'
+  }
 });
 </script>
 
