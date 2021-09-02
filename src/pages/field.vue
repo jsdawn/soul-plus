@@ -34,7 +34,13 @@
 
     <h3 class="comp-title">禁用输入框</h3>
     <div class="comp-wrap">
-      <so-field label="文本" model-value="输入框只读" readonly></so-field>
+      <so-field
+        label="文本"
+        model-value="输入框只读"
+        readonly
+        clickable
+      ></so-field>
+      
       <so-field label="文本" model-value="输入框已禁用" disabled></so-field>
     </div>
 
@@ -108,8 +114,19 @@
         type="textarea"
         label="评论"
         v-model="info.textarea1"
-        autosize
+        rows="1"
+        :autosize="{ maxHeight: 200 }"
         placeholder="输入内容"
+      ></so-field>
+
+      <so-field
+        type="textarea"
+        label="反馈"
+        v-model="info.textarea2"
+        rows="2"
+        maxlength="50"
+        show-limit
+        placeholder="显示最大限制字数"
       ></so-field>
     </div>
   </div>
@@ -144,7 +161,10 @@ const info = reactive({
   },
 
   format1: '',
-  format2: ''
+  format2: '',
+
+  textarea1: '',
+  textarea2: ''
 });
 
 // 过滤输入的数字

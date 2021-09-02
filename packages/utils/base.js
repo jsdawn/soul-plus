@@ -1,5 +1,3 @@
-import { createApp } from 'vue';
-
 export const inBrowser = typeof window !== 'undefined';
 
 export function isFunction(val) {
@@ -22,35 +20,4 @@ export function pick(obj, keys, ignoreUndefined) {
     }
     return ret;
   }, {});
-}
-
-export function mountComponent(RootComponent) {
-  const app = createApp(RootComponent);
-  const root = document.createElement('div');
-
-  document.body.appendChild(root);
-
-  return {
-    instance: app.mount(root),
-    unmount() {
-      app.unmount();
-      document.body.removeChild(root);
-    }
-  };
-}
-
-// 将 htmlCollection append to parentElement
-export function appendElements(htmlCollection, parentElement) {
-  Array.from(htmlCollection).forEach(child => {
-    if (child.nodeType === 1) {
-      (parentElement || document.body).appendChild(child);
-    }
-  });
-}
-
-// trigger dom event
-export function trigger(target, type) {
-  const inputEvent = document.createEvent('HTMLEvents');
-  inputEvent.initEvent(type, true, true);
-  target.dispatchEvent(inputEvent);
 }

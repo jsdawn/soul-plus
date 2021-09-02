@@ -33,16 +33,15 @@
 
     <div class="so-field__value">
       <div class="so-field__body">
-        <template v-if="slots.input">
-          <div class="so-field__control">
-            <slot name="input"></slot>
-          </div>
-        </template>
+        <div v-if="slots.input" class="so-field__control">
+          <slot name="input"></slot>
+        </div>
 
         <template v-else>
           <textarea
             v-if="type === 'textarea'"
             class="so-field__control"
+            v-bind="inputAttrs"
           ></textarea>
 
           <input
@@ -74,6 +73,10 @@
         </slot>
       </div>
 
+      <div class="so-field__limit" v-if="props.showLimit && props.maxlength">
+        {{ valueLength }}/{{ props.maxlength }}
+      </div>
+
       <div
         class="so-field__error-message"
         v-if="state.validateMessage || props.errorMessage"
@@ -100,9 +103,10 @@ import {
   reactive,
   useSlots,
   watch,
-  onMounted
+  onMounted,
+  nextTick
 } from 'vue';
-import { trigger } from '../utils';
+import { trigger, resizeTextarea } from '../utils';
 import { useTruthy } from '../hooks';
 
 import SoIcon from '../Icon';
@@ -123,7 +127,8 @@ const props = defineProps({
   center: Boolean,
   clickable: Boolean,
   clearable: Boolean,
-  autosize: Boolean,
+  autosize: [Boolean, Object],
+  showLimit: Boolean,
 
   formatter: Function,
   formatTrigger: { type: String, default: 'change' },
@@ -152,7 +157,6 @@ const emit = defineEmits([
 ]);
 
 const attrs = useAttrs();
-
 const slots = useSlots();
 
 const initRenderClear = useTruthy(() => props.clearable);
@@ -166,6 +170,10 @@ const state = reactive({
 });
 
 const getModelValue = () => String(props.modelValue ?? '');
+
+const valueLength = computed(() => {
+  return getModelValue().length;
+});
 
 const showClear = computed(() => {
   return (
@@ -189,6 +197,13 @@ const updateValue = (value, trigger = 'change') => {
   if (value !== props.modelValue) {
     emit('update:modelValue', value);
   }
+};
+
+const resizeTextareaSize = () => {
+  const input = inputRef.value;
+  if (!(props.type === 'textarea' && props.autosize && input)) return;
+
+  resizeTextarea(input, props.autosize);
 };
 
 // -s validate rules -
@@ -295,7 +310,7 @@ const inputAttrs = computed(() => {
     ...attrs,
     ref: inputRef,
     name: props.name,
-    rows: props.rows,
+    rows: props.rows !== undefined ? +props.rows : undefined,
     value: props.modelValue,
     disabled: props.disabled,
     readonly: props.readonly,
@@ -322,10 +337,12 @@ watch(
     updateValue(getModelValue());
     resetValidation();
     validateWithTrigger('change');
+    nextTick(resizeTextareaSize);
   }
 );
 
 onMounted(() => {
   updateValue(getModelValue(), props.formatTrigger);
+  nextTick(resizeTextareaSize);
 });
 </script>

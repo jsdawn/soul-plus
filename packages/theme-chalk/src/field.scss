@@ -88,6 +88,14 @@ $error-color: $red;
     word-wrap: break-word;
   }
 
+  &__limit {
+    margin-top: 5px;
+    color: $text-secondary-color;
+    text-align: right;
+    font-size: $font-size-sm;
+    line-height: 1.4;
+  }
+
   &__error-message {
     margin-top: 5px;
     color: $error-color;
