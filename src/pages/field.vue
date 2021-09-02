@@ -83,6 +83,34 @@
         :rules="info.rules3"
       ></so-field>
     </div>
+
+    <h3 class="comp-title">格式化输入</h3>
+    <div class="comp-wrap">
+      <so-field
+        label="文本"
+        v-model="info.format1"
+        :formatter="formatter"
+        placeholder="输入时格式化"
+      ></so-field>
+
+      <so-field
+        label="文本"
+        v-model="info.format2"
+        :formatter="formatter"
+        format-trigger="blur"
+        placeholder="失去焦点时格式化"
+      ></so-field>
+    </div>
+
+    <h3 class="comp-title">高度自适应</h3>
+    <div class="comp-wrap">
+      <so-field
+        type="textarea"
+        label="评论"
+        v-model="info.textarea1"
+        placeholder="输入内容"
+      ></so-field>
+    </div>
   </div>
 </template>
 
@@ -100,19 +128,26 @@ const info = reactive({
   icon1: '',
   icon2: '',
 
+  err1: '',
   err2: '',
-
-  rules1: [
-    { required: true, message: '手机号不能为空' },
-    { pattern: /^1[0-9]{10}$/, message: '手机号格式错误', trigger: 'blur' }
+  err3: '',
+  rules2: [
+    { required: true, message: '手机号不能为空', trigger: 'change' },
+    { pattern: /^1[0-9]{10}$/, message: '手机号格式错误', trigger: 'change' }
   ],
   rules3: {
     validator: value => {
       return String(value) === '666';
     },
     message: '请输入 666 字面'
-  }
+  },
+
+  format1: '',
+  format2: ''
 });
+
+// 过滤输入的数字
+const formatter = value => value.replace(/\d/g, '');
 </script>
 
 <style lang="scss" scoped>

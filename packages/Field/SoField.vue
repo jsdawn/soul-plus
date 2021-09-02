@@ -33,32 +33,44 @@
 
     <div class="so-field__value">
       <div class="so-field__body">
-        <slot>
+        <template v-if="slots.input">
+          <div class="so-field__control">
+            <slot name="input"></slot>
+          </div>
+        </template>
+
+        <template v-else>
+          <textarea
+            v-if="type === 'textarea'"
+            class="so-field__control"
+          ></textarea>
+
           <input
+            v-else
             class="so-field__control"
             v-bind="inputAttrs"
             :type="props.type || 'text'"
           />
+        </template>
 
-          <div
-            class="so-field__clear"
-            v-if="initRenderClear"
-            v-show="showClear"
-            @touchstart="onClear"
-            @mousedown="onClear"
-          >
-            <SoIcon name="clear" :size="props.iconSize" />
+        <div
+          class="so-field__clear"
+          v-if="initRenderClear"
+          v-show="showClear"
+          @touchstart="onClear"
+          @mousedown="onClear"
+        >
+          <SoIcon name="clear" :size="props.iconSize" />
+        </div>
+
+        <slot name="right-icon">
+          <div class="so-field__right-icon" v-if="props.rightIcon">
+            <SoIcon
+              :classPrefix="props.iconPrefix"
+              :name="props.rightIcon"
+              :size="props.iconSize"
+            />
           </div>
-
-          <slot name="right-icon">
-            <div class="so-field__right-icon" v-if="props.rightIcon">
-              <SoIcon
-                :classPrefix="props.iconPrefix"
-                :name="props.rightIcon"
-                :size="props.iconSize"
-              />
-            </div>
-          </slot>
         </slot>
       </div>
 
@@ -101,18 +113,21 @@ const props = defineProps({
   type: String, // tel digit number textarea password
   placeholder: String,
   autocomplete: String,
+  autofocus: Boolean,
   disabled: Boolean,
   readonly: Boolean,
   maxlength: [Number, String],
   rows: [Number, String],
 
-  required: Boolean,
-  clearable: Boolean,
-  autofocus: Boolean,
-  errorMessage: String,
-  formatter: Function,
   center: Boolean,
   clickable: Boolean,
+  clearable: Boolean,
+  autosize: Boolean,
+
+  formatter: Function,
+  formatTrigger: { type: String, default: 'change' },
+  required: Boolean,
+  errorMessage: String,
   rules: [Array, Object],
 
   labelClass: [String, Array, Object],
@@ -160,7 +175,16 @@ const showClear = computed(() => {
   );
 });
 
-const updateValue = value => {
+const updateValue = (value, trigger = 'change') => {
+  if (props.formatter && trigger === props.formatTrigger) {
+    value = props.formatter(value);
+  }
+
+  // input text upd
+  if (inputRef.value && inputRef.value.value !== value) {
+    inputRef.value.value = value;
+  }
+
   if (value !== props.modelValue) {
     emit('update:modelValue', value);
   }
@@ -178,9 +202,11 @@ const validate = rules => {
   resetValidation();
   if (!rules || !rules.length) return;
 
+  let validValue = getModelValue();
+
   for (let rule of rules) {
     // required
-    if (rule.required && getModelValue() == '') {
+    if (rule.required && validValue == '') {
       state.validateFailed = true;
       state.validateMessage = rule.message || '';
       return;
@@ -188,7 +214,7 @@ const validate = rules => {
 
     // validator
     if (rule.validator) {
-      let result = rule.validator(props.modelValue, rule);
+      let result = rule.validator(validValue, rule);
       let isResStr = typeof result === 'string';
       if (isResStr || result === false) {
         state.validateFailed = true;
@@ -199,7 +225,7 @@ const validate = rules => {
     // pattern
     else if (rule.pattern) {
       let reg = new RegExp(rule.pattern);
-      if (reg && !reg.test(props.modelValue)) {
+      if (reg && !reg.test(validValue)) {
         state.validateFailed = true;
         state.validateMessage = rule.message || '';
         return;
@@ -232,7 +258,7 @@ const onClear = event => {
 
 const onBlur = event => {
   state.focused = false;
-  updateValue(getModelValue());
+  updateValue(getModelValue(), 'blur');
   emit('blur', event);
   validateWithTrigger('blur');
 };
@@ -299,6 +325,6 @@ watch(
 );
 
 onMounted(() => {
-  updateValue(getModelValue());
+  updateValue(getModelValue(), props.formatTrigger);
 });
 </script>
