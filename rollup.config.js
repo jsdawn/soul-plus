@@ -8,7 +8,8 @@ import scss from 'rollup-plugin-scss';
 import commonjs from 'rollup-plugin-commonjs';
 
 // not comps files
-const NOT_COMPS = ['index.js', 'style', 'hooks', 'theme-chalk'];
+const NOT_COMPS = ['index.js', 'utils', 'hooks', 'theme-chalk'];
+
 // sync comps files
 let comps = fs.readdirSync('./packages');
 comps = comps.filter(v => !NOT_COMPS.includes(v));

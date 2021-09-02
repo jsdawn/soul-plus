@@ -1,5 +1,5 @@
 import { h, render } from 'vue';
-import { appendElements } from '../hooks';
+import { appendElements } from '../utils';
 import ToastConstructor from './SoToast.vue';
 
 let instances = [];

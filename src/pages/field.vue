@@ -108,6 +108,7 @@
         type="textarea"
         label="评论"
         v-model="info.textarea1"
+        autosize
         placeholder="输入内容"
       ></so-field>
     </div>

@@ -1,5 +1,6 @@
 import { h, reactive, nextTick } from 'vue';
-import { mountComponent, useInstanceExpose } from '../hooks';
+import { mountComponent } from '../utils';
+import { useInstanceExpose } from '../hooks';
 
 import SoDialog from './SoDialog.vue';
 

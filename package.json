@@ -16,7 +16,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lib": "rm -rf es && rm -rf lib && rollup -c",
+    "lib": "rm -rf es && rm -rf lib && rollup -c && yarn run lib:theme",
     "lib:theme": "cd packages/theme-chalk && yarn clean && yarn build",
     "docker:build": "chmod +x ./docker-build.sh && ./docker-build.sh"
   },

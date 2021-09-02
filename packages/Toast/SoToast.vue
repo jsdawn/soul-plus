@@ -21,7 +21,7 @@
 
 <script setup>
 import { computed, watch, onUnmounted } from 'vue';
-import { pick } from '../hooks';
+import { pick } from '../utils';
 import { popupSharedProps, popupSharedPropKeys } from '../Popup/shared';
 
 import SoPopup from '../Popup';

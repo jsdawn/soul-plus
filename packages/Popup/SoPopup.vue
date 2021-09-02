@@ -43,9 +43,8 @@ export default {
 
 <script setup>
 import { ref, useAttrs, computed, watch, onMounted } from 'vue';
-// utils
+import { callInterceptor } from '../utils';
 import { useTruthy, useLockScroll } from '../hooks';
-import { callInterceptor } from '../hooks/callInterceptor';
 import { popupSharedProps } from './shared';
 // components
 import SoOverlay from '../Overlay';

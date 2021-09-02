@@ -102,7 +102,8 @@ import {
   watch,
   onMounted
 } from 'vue';
-import { trigger, useTruthy } from '../hooks';
+import { trigger } from '../utils';
+import { useTruthy } from '../hooks';
 
 import SoIcon from '../Icon';
 

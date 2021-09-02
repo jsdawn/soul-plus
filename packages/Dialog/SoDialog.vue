@@ -56,8 +56,7 @@
 <script setup>
 import { computed, reactive } from 'vue';
 
-import { pick } from '../hooks';
-import { callInterceptor } from '../hooks/callInterceptor';
+import { pick, callInterceptor } from '../utils';
 import { popupSharedProps, popupSharedPropKeys } from '../Popup/shared';
 
 import SoPopup from '../Popup';
