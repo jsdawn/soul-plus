@@ -67,6 +67,8 @@ export function getVisibleHeight(el) {
   if ('getBoundingClientRect' in el) {
     return el.getBoundingClientRect().height;
   }
+
+  return el.offsetHeight;
 }
 
 export function resizeTextarea(input, autosize = true) {

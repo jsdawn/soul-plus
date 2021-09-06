@@ -4,6 +4,7 @@
 @import './button.scss';
 
 $dialog-border-color: $gray-4;
+$dialog-side-padding: 20px;
 
 .so-dialog {
   @include rp('.so-popup') {
@@ -17,11 +18,12 @@ $dialog-border-color: $gray-4;
   }
 
   &__title {
-    padding: 15px;
+    padding: 15px $dialog-side-padding;
     font-size: 18px;
     line-height: 1;
     color: $text-color;
     text-align: center;
+    @include ellipsis;
   }
 
   &__content {
@@ -29,7 +31,7 @@ $dialog-border-color: $gray-4;
   }
 
   &__message {
-    padding: 30px 20px 20px;
+    padding: 30px $dialog-side-padding $dialog-side-padding;
     font-size: 15px;
     line-height: 1.5;
     overflow: auto;

@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: '/dropdown-menu',
-    component: () => import('../pages/dropdownMenu.vue')
+    component: () => import('../pages/dropdown-menu.vue')
   },
   {
     path: '/overlay',
@@ -44,6 +44,10 @@ const routes = [
   {
     path: '/field',
     component: () => import('../pages/field.vue')
+  },
+  {
+    path: '/action-sheet',
+    component: () => import('../pages/action-sheet.vue')
   }
 ];
 

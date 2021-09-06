@@ -10,6 +10,7 @@ import SoTabs from './Tabs';
 import SoTabPane from './TabPane';
 import SoDialog from './Dialog';
 import SoField from './Field';
+import SoActionSheet from './ActionSheet';
 
 const components = [
   SoDropdownMenu,
@@ -23,7 +24,8 @@ const components = [
   SoTabs,
   SoTabPane,
   SoDialog,
-  SoField
+  SoField,
+  SoActionSheet
 ];
 
 const install = app => {
@@ -48,7 +50,8 @@ export {
   SoTabs,
   SoTabPane,
   SoDialog,
-  SoField
+  SoField,
+  SoActionSheet
 };
 
 export default SoulPlus;

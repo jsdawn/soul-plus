@@ -13,6 +13,13 @@
         <span>{{ item.name }}</span> <i>&gt;</i>
       </router-link>
     </div>
+
+    <h3 class="comp-title">反馈组件</h3>
+    <div class="components">
+      <router-link v-for="item in feedbackComps" :key="item.name" :to="item.path">
+        <span>{{ item.name }}</span> <i>&gt;</i>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -26,16 +33,21 @@ const baseComps = ref([
   { name: 'Popup 弹出层', path: '/popup' },
   { name: 'Toast 轻提示', path: '/toast' },
   { name: 'Icon 图标', path: '/icon' },
-  { name: 'Tabs 标签页', path: '/tabs' },
-  { name: 'Dialog 对话框', path: '/dialog' },
-  { name: 'DropdownMenu 下拉菜单', path: '/dropdown-menu' }
+  { name: 'Tabs 标签页', path: '/tabs' }
 ]);
 
 const formComps = ref([{ name: 'Field 输入框', path: '/field' }]);
+
+const feedbackComps = ref([
+  { name: 'DropdownMenu 下拉菜单', path: '/dropdown-menu' },
+  { name: 'Dialog 对话框', path: '/dialog' },
+  { name: 'ActionSheet 动作面板', path: '/action-sheet' }
+]);
 </script>
 
 <style lang="scss" scoped>
 .page-index {
+  padding-bottom: 20px;
   background-color: #fff;
 }
 .components {

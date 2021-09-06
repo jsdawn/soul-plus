@@ -267,7 +267,7 @@ const validateWithTrigger = trigger => {
 const onClick = event => emit('click', event);
 
 const onClear = event => {
-  event.preventDefault();
+  event.stopPropagation();
   emit('update:modelValue', '');
   emit('clear', event);
 };
