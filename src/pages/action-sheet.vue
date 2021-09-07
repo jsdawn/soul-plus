@@ -7,8 +7,7 @@
 
     <so-action-sheet
       v-model:show="show1"
-      title="动作面板"
-      description="这是一段描述"
+      description="这是一段描述，以下是操作选项"
       cancel-text="取消"
       :actions="actions"
     ></so-action-sheet>
@@ -17,13 +16,23 @@
 
 <script setup>
 import { ref } from 'vue';
-import { SoButton, SoActionSheet } from 'packages/index.js';
+import { SoButton, SoActionSheet, SoToast } from 'packages/index.js';
 
 const show1 = ref(false);
+
+const deleteHandler = action => {
+  action.loading = true;
+  setTimeout(() => {
+    action.loading = false;
+    SoToast('删除成功');
+    show1.value = false;
+  }, 2000);
+};
+
 const actions = ref([
-  { id: 1, name: '选项一' },
-  { id: 2, name: '选项二' },
-  { id: 3, name: '选项三' }
+  { name: '选项一' },
+  { name: '选项二', disabled: true },
+  { name: '删除', color: 'red', className: 'delete', callback: deleteHandler }
 ]);
 </script>
 

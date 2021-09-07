@@ -45,10 +45,6 @@ const Toast = function (opts) {
     }
   });
 
-  // vm.props['onUpdate:show'] = value => {
-  //   vm.component.props.show = value;
-  // };
-
   // clean element preventing mem leak
   vm.props.onClosed = () => {
     render(null, container);

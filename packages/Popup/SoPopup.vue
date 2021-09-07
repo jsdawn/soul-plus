@@ -109,8 +109,8 @@ const close = () => {
   });
 };
 
-const clickOverlay = () => {
-  emit('click-overlay');
+const clickOverlay = event => {
+  emit('click-overlay', event);
   if (props.closeOnClickOverlay) {
     close();
   }
@@ -126,6 +126,7 @@ watch(
     if (value) {
       open();
     } else {
+      if (!isOpened.value) return;
       isOpened.value = false;
       emit('close');
     }

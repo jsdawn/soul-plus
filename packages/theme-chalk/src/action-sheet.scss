@@ -2,8 +2,9 @@
 @import './mixins/mixins.scss';
 @import './popup.scss';
 
-$item-height: 50px;
+$item-line-height: 22px;
 $sheet-side-padding: 20px;
+$cancel-color: $gray-7;
 
 .so-action-sheet {
   @include rp('.so-popup') {
@@ -17,7 +18,7 @@ $sheet-side-padding: 20px;
 
   &__title {
     flex-shrink: 0;
-    padding: 15px $sheet-side-padding;
+    padding: 12px $sheet-side-padding;
     color: $text-color;
     font-size: 18px;
     text-align: left;
@@ -26,7 +27,7 @@ $sheet-side-padding: 20px;
 
   &__description {
     flex-shrink: 0;
-    padding: 15px $sheet-side-padding;
+    padding: 12px $sheet-side-padding;
     color: $text-secondary-color;
   }
 
@@ -44,13 +45,28 @@ $sheet-side-padding: 20px;
 
   &__item,
   &__cancel {
-    height: $item-height;
-    line-height: $item-height;
+    position: relative;
+    padding: 14px $sheet-side-padding;
+    line-height: $item-line-height;
+    box-sizing: border-box;
     cursor: pointer;
     user-select: none;
 
     &:active {
       background-color: $active-color;
+    }
+
+    &--disabeld,
+    &--loading {
+      color: $disabled-color !important;
+      &:active {
+        background-color: inherit;
+      }
+    }
+
+    &--loading {
+      padding-left: 40px;
+      padding-right: 40px;
     }
   }
 
@@ -58,8 +74,24 @@ $sheet-side-padding: 20px;
     border-top: 1px solid $border-color;
   }
 
+  &__indicator {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    margin-top: -7px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 8px;
+    border-color: $disabled-color $disabled-color $disabled-color transparent;
+    border-style: solid;
+    border-width: 1px;
+    animation: action-loading-spin 1s infinite linear;
+  }
+
   &__cancel {
     flex-shrink: 0;
+    color: $cancel-color;
     border-top: 1px solid $border-color;
   }
 
@@ -67,5 +99,15 @@ $sheet-side-padding: 20px;
     flex-shrink: 0;
     height: 6px;
     background-color: $background-color;
+  }
+
+  // keyframes
+  @keyframes action-loading-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }

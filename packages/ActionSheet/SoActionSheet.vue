@@ -5,6 +5,11 @@
     v-bind="popupProps"
     :position="props.position"
     @update:show="updateShow"
+    @open="onOpen"
+    @opened="onOpened"
+    @close="onClose"
+    @closed="onClosed"
+    @click-overlay="onClickOverlay"
     :style="{ width: props.width }"
   >
     <div class="so-action-sheet__title" v-if="props.title">
@@ -16,18 +21,30 @@
     </div>
 
     <div class="so-action-sheet__content">
-      <div
-        role="button"
-        class="so-action-sheet__item"
-        v-for="(item, index) in actions"
-      >
-        {{ item.name }}
-      </div>
+      <slot>
+        <div
+          role="button"
+          class="so-action-sheet__item"
+          v-for="(action, index) in actions"
+          :class="[
+            { 'so-action-sheet__item--disabeld': action.disabled },
+            { 'so-action-sheet__item--loading': action.loading },
+            action.className
+          ]"
+          @click="onSelect(action, index)"
+          :style="{ color: action.color }"
+        >
+          <span class="so-action-sheet__name">{{ action.name }}</span>
+          <span v-if="action.loading" class="so-action-sheet__indicator"></span>
+        </div>
+      </slot>
     </div>
 
     <template v-if="props.cancelText">
       <div class="so-action-sheet__separate"></div>
-      <div class="so-action-sheet__cancel">{{ props.cancelText }}</div>
+      <div class="so-action-sheet__cancel" @click="onCancel">
+        {{ props.cancelText }}
+      </div>
     </template>
   </so-popup>
 </template>
@@ -46,17 +63,51 @@ const props = defineProps({
   position: { type: String, default: 'bottom' },
   title: String,
   description: String,
-  actions: Array,
+  actions: Array, // {name,color,className,disabled,callback}
   width: String,
   className: String,
-  cancelText: String
+  cancelText: String,
+  closeOnClickAction: Boolean
 });
 
-const emit = defineEmits(['update:show', 'cancel']);
+const emit = defineEmits([
+  'update:show',
+  'cancel',
+  'select',
+  'click-overlay',
+  'open',
+  'opened',
+  'close',
+  'closed'
+]);
 
 const popupProps = computed(() => {
   return pick(props, popupSharedPropKeys);
 });
 
 const updateShow = value => emit('update:show', value);
+
+const onCancel = () => {
+  updateShow(false);
+  emit('cancel');
+};
+
+const onSelect = (action, index) => {
+  if (action.disabled) return;
+  emit('select', action, index);
+
+  if (action.callback) {
+    action.callback(action);
+  }
+
+  if (props.closeOnClickAction) {
+    updateShow(false);
+  }
+};
+
+const onOpen = () => emit('open');
+const onOpened = () => emit('opened');
+const onClose = () => emit('close');
+const onClosed = () => emit('closed');
+const onClickOverlay = event => emit('click-overlay', event);
 </script>

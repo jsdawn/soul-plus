@@ -23,7 +23,7 @@ $button-background-color: $gray-3;
     margin-left: 10px;
   }
 
-  .so-button__indicator {
+  &__indicator {
     display: inline-block;
     width: 13px;
     height: 13px;
@@ -32,7 +32,7 @@ $button-background-color: $gray-3;
     border-color: $text-color $text-color $text-color transparent;
     border-style: solid;
     border-width: 1px;
-    animation: loading-spin 1s infinite linear;
+    animation: button-loading-spin 1s infinite linear;
   }
 
   &:active {
@@ -156,7 +156,7 @@ $button-background-color: $gray-3;
   }
 
   // keyframes
-  @keyframes loading-spin {
+  @keyframes button-loading-spin {
     0% {
       transform: rotate(0deg);
     }
