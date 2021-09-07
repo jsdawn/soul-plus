@@ -1,7 +1,7 @@
 <template>
   <so-popup
     role="action-sheet"
-    :class="['so-action-sheet', props.className]"
+    class="so-action-sheet"
     v-bind="popupProps"
     :position="props.position"
     @update:show="updateShow"
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, nextTick } from 'vue';
 
 import { pick } from '../utils';
 import { popupSharedProps, popupSharedPropKeys } from '../Popup/shared';
@@ -65,7 +65,6 @@ const props = defineProps({
   description: String,
   actions: Array, // {name,color,className,disabled,callback}
   width: String,
-  className: String,
   cancelText: String,
   closeOnClickAction: Boolean
 });
@@ -93,8 +92,7 @@ const onCancel = () => {
 };
 
 const onSelect = (action, index) => {
-  if (action.disabled) return;
-  emit('select', action, index);
+  if (action.disabled || action.loading) return;
 
   if (action.callback) {
     action.callback(action);
@@ -103,6 +101,10 @@ const onSelect = (action, index) => {
   if (props.closeOnClickAction) {
     updateShow(false);
   }
+
+  nextTick(() => {
+    emit('select', action, index);
+  });
 };
 
 const onOpen = () => emit('open');

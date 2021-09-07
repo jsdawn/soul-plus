@@ -13,7 +13,6 @@ const defaultOpts = {
   overlay: false, // 默认不显示遮罩层
   overlayClass: undefined,
   disabledTeleport: true, // 禁用 Teleport
-  forbidClick: false, // 静止点击背景
   closeOnClickOverlay: false,
   lockScroll: false
 };
@@ -47,6 +46,9 @@ const Toast = function (opts) {
 
   // clean element preventing mem leak
   vm.props.onClosed = () => {
+    if (options.onClosed) {
+      options.onClosed();
+    }
     render(null, container);
   };
 

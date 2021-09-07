@@ -35,8 +35,7 @@ const props = defineProps({
   position: { type: String, default: 'bottom' }, // center bottom
   message: String,
   duration: { type: Number, default: 2000 }, // 0则不关闭
-  transition: String,
-  forbidClick: Boolean // 静止点击背景
+  transition: String
 });
 
 const emit = defineEmits(['update:show', 'closed']);
@@ -45,11 +44,6 @@ let timer;
 
 const popupProps = computed(() => {
   return pick(props, popupSharedPropKeys);
-});
-
-const overlayClasses = computed(() => {
-  let forbidClass = props.forbidClick ? 'so-overlay--transparent' : '';
-  return props.overlayClass || forbidClass;
 });
 
 const transitionName = computed(() => {

@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { SoButton, SoToast } from 'packages/index.js';
 
 let tt;
@@ -23,7 +22,13 @@ const showToast = () => {
 };
 
 const showToast2 = () => {
-  tt = SoToast({ message: '中心文字提示', position: 'center' });
+  tt = SoToast({
+    message: '中心文字提示',
+    position: 'center',
+    onClosed: () => {
+      console.log('onClosed');
+    }
+  });
 };
 
 const closeToast = () => {
