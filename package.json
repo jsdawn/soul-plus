@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:gitee": "vite build --base=/soul-plus/",
+    "build:gitee": "vite build --base=/soul-plus/ --outDir=gitee-pages",
     "serve": "vite preview",
     "lib": "rm -rf es && rm -rf lib && rollup -c && yarn run lib:theme",
     "lib:theme": "cd packages/theme-chalk && yarn clean && yarn build",
