@@ -5,7 +5,6 @@
     "target": "ES2019",
     "module": "ESNext",
     "strict": true,
-    "allowJs": true,
     "skipLibCheck": true,
     "noImplicitThis": true,
     "esModuleInterop": true,
