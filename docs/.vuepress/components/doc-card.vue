@@ -1,24 +1,21 @@
 <template>
-  <div class="card">
+  <div class="doc-card">
     <div class="card-content">
       <slot></slot>
+
       <div>
         <div v-if="state.codeVisible"><slot name="code"></slot></div>
       </div>
     </div>
-    <div class="card-operation" @click="toggle">
-      {{ state.msg }}
+
+    <div class="card-operation">
+      <span @click="toggle">{{ state.msg }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { createApp, reactive } from 'vue';
-import VueHighlightJS from 'vue3-highlightjs';
-import 'highlight.js/styles/solarized-light.css';
-
-const app = createApp({});
-app.use(VueHighlightJS);
+import { reactive } from 'vue';
 
 const state = reactive({
   codeVisible: false,
@@ -32,19 +29,27 @@ const toggle = () => {
 </script>
 
 <style lang="scss" scoped>
-.card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 3px 0 #ccc;
+.doc-card {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 0 0 3px 0 #eee;
+
   .card-content {
     padding: 14px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #eee;
   }
+
   .card-operation {
+    width: 100%;
     height: 40px;
+    line-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    span {
+      padding: 0 10px;
+      cursor: pointer;
+    }
   }
 }
 </style>
