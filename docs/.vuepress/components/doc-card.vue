@@ -13,7 +13,12 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { createApp, reactive } from 'vue';
+import VueHighlightJS from 'vue3-highlightjs';
+import 'highlight.js/styles/solarized-light.css';
+
+const app = createApp({});
+app.use(VueHighlightJS);
 
 const state = reactive({
   codeVisible: false,

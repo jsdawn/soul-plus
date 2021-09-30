@@ -2,7 +2,7 @@
   <router-link to="/">
     <section class="ui-face">
       <h1>SoulPlus</h1>
-      <p class="secondary">Mobile UI Components built on Vue3 and Vite</p>
+      <p class="secondary">Mobile UI Components built on Vue3</p>
     </section>
   </router-link>
 
