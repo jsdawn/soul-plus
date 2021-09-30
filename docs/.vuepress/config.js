@@ -37,10 +37,30 @@ module.exports = {
     logo: '/logo_soul.png',
     repo: 'https://gitee.com/jsdawn/soul-plus.git',
     editLink: false,
+
     navbar: [
       { text: '指南', link: '/' },
-      { text: '组件', link: '/components' },
+      {
+        text: '组件',
+        link: '/components/basic/button',
+        activeMatch: '/components/'
+      },
       { text: '青山依旧', link: 'http://www.qscoding.com/' }
-    ]
+    ],
+
+    sidebar: {
+      '/': [
+        {
+          text: '指南',
+          children: ['/README.md']
+        }
+      ],
+      '/components/': [
+        {
+          text: '基础组件',
+          children: ['/components/basic/button.md', '/components/basic/cell.md']
+        }
+      ]
+    }
   }
 };

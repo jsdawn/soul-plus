@@ -1,9 +1,3 @@
----
-next:
-  text: 组件
-  link: ./components.md
----
-
 # soul-plus
 
 > 请勿使用版本号小于 `1.0.0` 的版本。该组件库正处于开发阶段，欢迎有志之士加入，更多信息请提 issues。
