@@ -11,11 +11,9 @@ sidebarDepth: 0
 
 ### 组件属性
 
-| 名称       | 类型      | 描述                                                |
-| ---------- | --------- | --------------------------------------------------- |
-| `loading`  | `Boolean` | 加载状态                                            |
-| `disabled` | `Boolean` | 禁用状态                                            |
-| `type`     | `String`  | 类型，可选值 `primary` `success` `warning` `danger` |
-| `plain`    | `Boolean` | 是否朴素按钮                                        |
-| `round`    | `Boolean` | 是否圆角                                            |
-| `block`    | `Boolean` | 是否块级按钮                                        |
+| 名称        | 类型        | 描述             |
+| ----------- | ----------- | ---------------- |
+| `title`     | `String`    | 标题             |
+| `value`     | `String`    | 单元格右侧内容   |
+| `label`     | `String`    | 次要标题         |
+| `clickable` | `clickable` | 单元格是否可点击 |
