@@ -3,9 +3,7 @@
     <div class="card-content">
       <slot></slot>
 
-      <div>
-        <div v-if="state.codeVisible"><slot name="code"></slot></div>
-      </div>
+      <highlightjs v-show="state.codeVisible" :code="props.code" />
     </div>
 
     <div class="card-operation">
@@ -14,8 +12,26 @@
   </div>
 </template>
 
+<script>
+import hljs from 'highlight.js/lib/core';
+import xml from 'highlight.js/lib/languages/xml';
+import hljsVuePlugin from '@highlightjs/vue-plugin';
+
+hljs.registerLanguage('xml', xml);
+
+export default {
+  components: {
+    highlightjs: hljsVuePlugin.component
+  }
+};
+</script>
+
 <script setup>
 import { reactive } from 'vue';
+
+const props = defineProps({
+  code: { type: String, default: '' }
+});
 
 const state = reactive({
   codeVisible: false,
@@ -28,7 +44,7 @@ const toggle = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .doc-card {
   border: 1px solid #eee;
   border-radius: 5px;
@@ -49,6 +65,14 @@ const toggle = () => {
     span {
       padding: 0 10px;
       cursor: pointer;
+    }
+  }
+
+  pre {
+    padding: 0;
+    margin: 0;
+    code.hljs {
+      color: inherit;
     }
   }
 }

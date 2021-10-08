@@ -1,5 +1,6 @@
 const { path } = require('@vuepress/utils');
 
+const isProduction = process.env.NODE_ENV === 'production';
 // 兼容 GitHub Pages 和 vercel 部署
 const base = process.env.BUILD_ENV ? process.env.BUILD_ENV : '/';
 
@@ -10,13 +11,22 @@ module.exports = {
   title: 'soul-plus',
   description: 'Mobile UI Components built on Vue3',
 
+  bundler: isProduction ? '@vuepress/webpack' : '@vuepress/vite',
+
   head: [
-    ['link', { rel: 'icon', href: base + 'logo_soul.png' }],
     [
       'meta',
       {
         name: 'keywords',
         content: 'soul,soul-plus,ui,vue3,components,jsdawn,青山依旧'
+      }
+    ],
+    ['link', { rel: 'icon', href: base + 'logo_soul.png' }],
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://unpkg.com/highlight.js@11.2.0/styles/rainbow.css'
       }
     ]
   ],
@@ -24,6 +34,7 @@ module.exports = {
   alias: {
     packages: path.resolve(__dirname, '../../packages')
   },
+  clientAppEnhanceFiles: path.resolve(__dirname, './clientAppEnhance.js'),
   plugins: [
     [
       '@vuepress/register-components',

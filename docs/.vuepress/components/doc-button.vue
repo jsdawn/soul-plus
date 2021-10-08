@@ -1,6 +1,6 @@
 <template>
   <div>
-    <doc-card>
+    <doc-card :code="code">
       <so-button type="primary">按钮</so-button>
       <so-button type="success">按钮</so-button>
       <so-button>按钮</so-button>
@@ -18,9 +18,10 @@
 import SoButton from 'packages/Button';
 import 'packages/theme-chalk/src/button.scss';
 
-const code = `<so-button type="primary">按钮</so-button>
-            <so-button type="success">按钮</so-button>
-            <so-button>按钮</so-button>`;
+const code = `
+  <so-button type="primary">按钮</so-button>
+  <so-button type="success">按钮</so-button>
+  <so-button>按钮</so-button>`;
 </script>
 
 <style lang="scss" scoped></style>

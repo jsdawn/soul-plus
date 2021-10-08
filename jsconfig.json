@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "jsx": "preserve",
     "target": "ES2019",
     "module": "ESNext",
@@ -10,5 +9,5 @@
     "esModuleInterop": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*", "types/**/*", "packages/**/*", "test/**/*"]
+  "exclude": ["node_modules", "**/__tests__", "dist/**"]
 }

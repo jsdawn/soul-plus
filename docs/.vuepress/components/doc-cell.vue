@@ -1,14 +1,8 @@
 <template>
   <div>
-    <doc-card>
+    <doc-card :code="code">
       <so-cell title="标题" value="内容"></so-cell>
       <so-cell title="标题" label="描述信息" value="内容"></so-cell>
-
-      <template v-slot:code>
-        <pre>
-          <code style="color:#999">{{code}}</code>
-        </pre>
-      </template>
     </doc-card>
   </div>
 </template>
