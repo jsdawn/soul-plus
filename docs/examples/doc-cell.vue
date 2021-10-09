@@ -1,9 +1,9 @@
 <template>
   <div>
-    <doc-card :code="code">
+    <doc-example :code="code">
       <so-cell title="标题" value="内容"></so-cell>
       <so-cell title="标题" label="描述信息" value="内容"></so-cell>
-    </doc-card>
+    </doc-example>
   </div>
 </template>
 

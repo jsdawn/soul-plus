@@ -34,12 +34,11 @@ module.exports = {
   alias: {
     packages: path.resolve(__dirname, '../../packages')
   },
-  clientAppEnhanceFiles: path.resolve(__dirname, './clientAppEnhance.js'),
   plugins: [
     [
       '@vuepress/register-components',
       {
-        componentsDir: path.resolve(__dirname, './components')
+        componentsDir: path.resolve(__dirname, '../examples')
       }
     ]
   ],

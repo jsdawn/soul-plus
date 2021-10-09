@@ -1,16 +1,10 @@
 <template>
   <div>
-    <doc-card :code="code">
+    <doc-example :code="code">
       <so-button type="primary">按钮</so-button>
       <so-button type="success">按钮</so-button>
       <so-button>按钮</so-button>
-
-      <template v-slot:code>
-        <pre>
-          <code style="color:#999">{{code}}</code>
-        </pre>
-      </template>
-    </doc-card>
+    </doc-example>
   </div>
 </template>
 
