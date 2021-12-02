@@ -21,7 +21,9 @@
     "docker:build": "chmod +x ./docker-build.sh && ./docker-build.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:build.gitee": "cross-env BUILD_ENV=/soul-plus/ vuepress build docs"
+    "docs:build.gitee": "cross-env BUILD_ENV=/soul-plus/ vuepress build docs",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -47,11 +49,17 @@
     "vue": "^3.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
+    "@storybook/addon-actions": "^6.4.4",
+    "@storybook/addon-essentials": "^6.4.4",
+    "@storybook/addon-links": "^6.4.4",
+    "@storybook/vue3": "^6.4.4",
     "@vitejs/plugin-vue": "^1.9.2",
     "@vue/compiler-sfc": "^3.2.19",
     "@vuepress/bundler-vite": "^2.0.0-beta.26",
     "@vuepress/plugin-register-components": "^2.0.0-beta.26",
+    "babel-loader": "^8.2.3",
     "babel-plugin-import": "^1.13.3",
     "cross-env": "^7.0.3",
     "esbuild": "^0.12.21",
@@ -65,8 +73,10 @@
     "rollup-plugin-vue": "6.0.0",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
+    "storybook-builder-vite": "^0.1.10",
     "vite": "^2.5.10",
     "vite-plugin-style-import": "^1.2.1",
+    "vue-loader": "^16.8.3",
     "vuepress": "^2.0.0-beta.26"
   },
   "browserslist": [
