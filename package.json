@@ -23,7 +23,8 @@
     "docs:build": "vuepress build docs",
     "docs:build.gitee": "cross-env BUILD_ENV=/soul-plus/ vuepress build docs",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook:build": "build-storybook -o ./.storybook/dist && yarn run storybook:serve",
+    "storybook:serve": "http-server -c-1 ./.storybook/dist"
   },
   "repository": {
     "type": "git",
@@ -75,7 +76,6 @@
     "sass-loader": "^12.1.0",
     "storybook-builder-vite": "^0.1.10",
     "vite": "^2.5.10",
-    "vite-plugin-style-import": "^1.2.1",
     "vue-loader": "^16.8.3",
     "vuepress": "^2.0.0-beta.26"
   },
