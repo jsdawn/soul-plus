@@ -14,7 +14,7 @@ module.exports = {
   core: {
     builder: 'storybook-builder-vite',
   },
-  async viteFinal(config, { configType }) {
+  async viteFinal(config) {
     // customize the Vite config here
     if (BaseUrl) config.base = BaseUrl;
 
@@ -25,6 +25,14 @@ module.exports = {
       style: resolve('../src/style'),
       packages: resolve('../packages'),
     };
+
+    // return the customized config
+    return config;
+  },
+
+  async managerVite(config) {
+    // customize the Vite config here
+    if (BaseUrl) config.base = BaseUrl;
 
     // return the customized config
     return config;
