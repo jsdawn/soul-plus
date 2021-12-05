@@ -23,7 +23,7 @@
     "docs:build": "vuepress build docs",
     "docs:build.gitee": "cross-env BUILD_ENV=/soul-plus/ vuepress build docs",
     "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook -o ./.storybook/dist && yarn run storybook:serve",
+    "storybook:build": "cross-env SBK_URL=/soul-plus/ build-storybook -o ./.storybook/dist && yarn run storybook:serve",
     "storybook:serve": "http-server -c-1 ./.storybook/dist"
   },
   "repository": {

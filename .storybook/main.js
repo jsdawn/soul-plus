@@ -1,6 +1,8 @@
 const path = require('path');
 const resolve = dir => path.join(__dirname, dir);
 
+const BaseUrl = process.env.SBK_URL;
+
 module.exports = {
   stories: [
     '../packages/**/*.stories.@(js|jsx|ts|tsx)',
@@ -14,6 +16,8 @@ module.exports = {
   },
   async viteFinal(config, { configType }) {
     // customize the Vite config here
+    if (BaseUrl) config.base = BaseUrl;
+
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': resolve('../src'),
