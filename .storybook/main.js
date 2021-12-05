@@ -38,11 +38,11 @@ module.exports = {
     return config;
   },
 
-  async managerWebpack(config) {
-    // customize the Vite config here
-    if (BaseUrl) config.output.publicPath = BaseUrl;
+  // async managerWebpack(config) {
+  //   // customize the Vite config here
+  //   if (BaseUrl) config.output.publicPath = BaseUrl;
 
-    // return the customized config
-    return config;
-  },
+  //   // return the customized config
+  //   return config;
+  // },
 };
